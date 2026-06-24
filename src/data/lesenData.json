@@ -1,0 +1,24 @@
+{
+  "b1": [
+    { "id": 1, "titleDe": "Familie", "titleAr": "العائلة", "level": "B1", "duration": 90, "parts": 2 },
+    { "id": 2, "titleDe": "Schule", "titleAr": "المدرسة", "level": "B1", "duration": 90, "parts": 2 },
+    { "id": 3, "titleDe": "Arbeit", "titleAr": "العمل", "level": "B1", "duration": 90, "parts": 0 },
+    { "id": 4, "titleDe": "Reisen", "titleAr": "السفر", "level": "B1", "duration": 90, "parts": 2 },
+    { "id": 5, "titleDe": "Gesundheit", "titleAr": "الصحة", "level": "B1", "duration": 90, "parts": 0 },
+    { "id": 6, "titleDe": "Wohnen", "titleAr": "السكن", "level": "B1", "duration": 90, "parts": 2 }
+  ],
+  "b2": [
+    { "id": 7,  "titleDe": "Sport ist gesund", "titleAr": "الرياضة مفيدة للصحة", "level": "B2", "duration": 90, "parts": 2 },
+    { "id": 8,  "titleDe": "Jugend forscht / Kellner", "titleAr": "النادل", "level": "B2", "duration": 90, "parts": 0 },
+    { "id": 9,  "titleDe": "Impfung", "titleAr": "اللقاح", "level": "B2", "duration": 90, "parts": 0 },
+    { "id": 10, "titleDe": "Tanzkurs", "titleAr": "دورة الرقص", "level": "B2", "duration": 90, "parts": 2 },
+    { "id": 11, "titleDe": "Insel", "titleAr": "الجزيرة", "level": "B2", "duration": 90, "parts": 2 },
+    { "id": 12, "titleDe": "Bilder", "titleAr": "الصور", "level": "B2", "duration": 90, "parts": 0 },
+    { "id": 13, "titleDe": "Grundschule", "titleAr": "المدرسة الابتدائية", "level": "B2", "duration": 90, "parts": 0 },
+    { "id": 14, "titleDe": "Namssa", "titleAr": "النمسا", "level": "B2", "duration": 90, "parts": 2 },
+    { "id": 15, "titleDe": "Insekten", "titleAr": "الحشرات", "level": "B2", "duration": 90, "parts": 2 },
+    { "id": 16, "titleDe": "Benzin", "titleAr": "البنزين", "level": "B2", "duration": 90, "parts": 0 },
+    { "id": 17, "titleDe": "Kaffee", "titleAr": "القهوة", "level": "B2", "duration": 90, "parts": 0 },
+    { "id": 18, "titleDe": "Mobarmijine", "titleAr": "المرمجين", "level": "B2", "duration": 90, "parts": 0 }
+  ]
+}
