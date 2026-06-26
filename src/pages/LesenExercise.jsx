@@ -1,801 +1,856 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from "react-router-dom";
 
-// ─── Icons ───────────────────────────────────────────────────────────────────
-const Icon = ({ name, size = 16, className = '' }) => {
-  const s = { width: size, height: size, flexShrink: 0 };
-  if (name === 'check') return (
-    <svg style={s} className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <polyline points="20 6 9 17 4 12"/>
-    </svg>
-  );
-  if (name === 'arrow-left') return (
-    <svg style={s} className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
-    </svg>
-  );
-  if (name === 'arrow-right') return (
-    <svg style={s} className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-    </svg>
-  );
-  if (name === 'flag') return (
-    <svg style={s} className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/>
-    </svg>
-  );
-  if (name === 'shuffle') return (
-    <svg style={s} className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/>
-    </svg>
-  );
-  if (name === 'type') return (
-    <svg style={s} className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/>
-    </svg>
-  );
-  if (name === 'moon') return (
-    <svg style={s} className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-    </svg>
-  );
-  return null;
-};
+// ═══════════════════════════════════════════════════════════════════════════════
+// IMPORT YOUR DATA FILES HERE
+// ═══════════════════════════════════════════════════════════════════════════════
+import q1 from '../data/b2/teil1/jugend-forscht-kellner/q1.json'
+import q2 from '../data/b2/teil1/jugend-forscht-kellner/q1.json'
+import q3 from '../data/b2/teil1/jugend-forscht-kellner/q1.json'
+import q4 from '../data/b2/teil1/jugend-forscht-kellner/q1.json'
+import q5 from '../data/b2/teil1/jugend-forscht-kellner/q1.json'
 
-// ─── Dynamic Topic Loader ────────────────────────────────────────────────────
-const loadTopic = async (level, subTab, topicId) => {
-  try {
-    const modules = import.meta.glob('../data/**/*.json', { eager: true });
-    for (const [path, module] of Object.entries(modules)) {
-      if (path.includes(`/data/${level}/${subTab}/`)) {
-        const data = module.default || module;
-        if (data.id === topicId) return data;
-      }
+const allQuestions = [q1, q2, q3, q4, q5];
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ICONS
+// ═══════════════════════════════════════════════════════════════════════════════
+const CheckIcon = ({ size = 16 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="20 6 9 17 4 12"/>
+  </svg>
+);
+const XIcon = ({ size = 16 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+  </svg>
+);
+const FlagIcon = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/>
+  </svg>
+);
+const LockIcon = ({ size = 14 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+  </svg>
+);
+const UnlockIcon = ({ size = 14 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+    <path d="M7 11V7a5 5 0 0 1 9.9-1"/>
+  </svg>
+);
+const ArrowRightIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M5 12h14M12 5l7 7-7 7"/>
+  </svg>
+);
+const ArrowLeftIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M19 12H5M12 19l-7-7 7-7"/>
+  </svg>
+);
+const VerifyIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+    <polyline points="22 4 12 14.01 9 11.01"/>
+  </svg>
+);
+const ResultIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+    <polyline points="14 2 14 8 20 8"/>
+    <line x1="16" y1="13" x2="8" y2="13"/>
+    <line x1="16" y1="17" x2="8" y2="17"/>
+    <polyline points="10 9 9 9 8 9"/>
+  </svg>
+);
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SINGLE QUESTION COMPONENT
+// ═══════════════════════════════════════════════════════════════════════════════
+const SingleQuestion = ({
+  data,
+  questionIndex,
+  totalQuestions,
+  showTranslation,
+  onShowTranslation,
+  checked,
+  onScoreChange,
+}) => {
+  const { texts, headings, titleDe, titleAr, level } = data;
+
+  const [assignments, setAssignments] = useState({});
+  const [locked, setLocked] = useState(new Set());
+  const [activeParagraph, setActiveParagraph] = useState(null);
+
+  const confirmedCount = locked.size;
+  const totalCount = texts.length;
+
+  // ✅ Report score upward when checked becomes true
+  useEffect(() => {
+    if (checked && onScoreChange) {
+      const correct = texts.filter(t => assignments[t.id] === t.correctHeadingId).length;
+      onScoreChange(correct);
     }
-    return null;
-  } catch (err) {
-    console.error('Error loading topic:', err);
-    return null;
-  }
-};
+  }, [checked]);
 
-// ─── Teil 1: Überschriften (EXACT Screenshot Design) ─────────────────────────
-const Teil1Exercise = ({ topic, showTranslation, onComplete }) => {
-  const [currentParagraphIndex, setCurrentParagraphIndex] = useState(0);
-  const [selectedHeading, setSelectedHeading] = useState(null);
-  const [showResult, setShowResult] = useState(false);
-  const [score, setScore] = useState(0);
-  const [completedParagraphs, setCompletedParagraphs] = useState([]);
-
-  const paragraphs = topic.texts || [];
-  const headings = topic.headings || [];
-  const currentParagraph = paragraphs[currentParagraphIndex];
-  const totalParagraphs = paragraphs.length;
-
-  if (!currentParagraph) return <div className="text-center py-20 text-gray-400">Keine Texte verfügbar</div>;
-
-  const handleHeadingSelect = (headingId) => {
-    if (showResult) return;
-    setSelectedHeading(headingId);
+  const isHeadingUsed = (headingId) => {
+    return Object.entries(assignments).some(
+      ([pid, hid]) => hid === headingId && locked.has(Number(pid))
+    );
   };
 
-  const handleVerify = () => {
-    if (!selectedHeading) return;
-    setShowResult(true);
-    if (selectedHeading === currentParagraph.correctHeadingId) setScore(s => s + 1);
+  const getAssignedParagraph = (headingId) => {
+    const entry = Object.entries(assignments).find(
+      ([pid, hid]) => hid === headingId && locked.has(Number(pid))
+    );
+    return entry ? Number(entry[0]) : null;
   };
 
-  const handleNext = () => {
-    const isCorrect = selectedHeading === currentParagraph.correctHeadingId;
-    setCompletedParagraphs(prev => [...prev, { 
-      paragraphId: currentParagraph.id, 
-      selected: selectedHeading, 
-      correct: isCorrect 
-    }]);
-    if (currentParagraphIndex < totalParagraphs - 1) {
-      setCurrentParagraphIndex(prev => prev + 1);
-      setSelectedHeading(null);
-      setShowResult(false);
-    } else {
-      onComplete(score + (isCorrect ? 1 : 0), totalParagraphs);
-    }
+  const handleParagraphClick = (textId) => {
+    if (checked) return;
+    if (locked.has(textId)) return;
+    setActiveParagraph(textId);
   };
 
-  const handlePrevious = () => {
-    if (currentParagraphIndex > 0) {
-      setCurrentParagraphIndex(prev => prev - 1);
-      const prevResult = completedParagraphs[currentParagraphIndex - 1];
-      if (prevResult) { 
-        setSelectedHeading(prevResult.selected); 
-        setShowResult(true); 
-      }
-      else { 
-        setSelectedHeading(null); 
-        setShowResult(false); 
-      }
-    }
+  const handleHeadingClick = (headingId) => {
+    if (!activeParagraph || checked) return;
+    if (locked.has(activeParagraph)) return;
+    if (isHeadingUsed(headingId) && assignments[activeParagraph] !== headingId) return;
+    setAssignments(prev => ({ ...prev, [activeParagraph]: headingId }));
   };
 
-  // Find selected heading text to show above paragraph
-  const selectedHeadingObj = headings.find(h => h.id === selectedHeading);
+  const handleConfirmParagraph = (textId) => {
+    if (!assignments[textId] || checked) return;
+    setLocked(prev => new Set([...prev, textId]));
+    const next = texts.find(t => !locked.has(t.id) && t.id !== textId);
+    setActiveParagraph(next ? next.id : null);
+  };
+
+  const handleUnconfirmParagraph = (textId) => {
+    if (checked) return;
+    setLocked(prev => {
+      const next = new Set(prev);
+      next.delete(textId);
+      return next;
+    });
+    setActiveParagraph(textId);
+  };
+
+  const handleReset = () => {
+    setAssignments({});
+    setLocked(new Set());
+    setActiveParagraph(null);
+  };
+
+  const getStatus = (text) => {
+    if (!checked && !locked.has(text.id)) return 'idle';
+    const correct = assignments[text.id] === text.correctHeadingId;
+    if (checked) return correct ? 'correct' : 'wrong';
+    return 'locked';
+  };
+
+  const score = checked ? texts.filter(t => assignments[t.id] === t.correctHeadingId).length : 0;
 
   return (
-    <div className="flex flex-col lg:flex-row gap-6">
-      {/* LEFT: Paragraphs */}
-      <div className="flex-1">
-        {/* Paragraph navigation - 1,2,3,4,5 */}
-        <div className="flex items-center justify-center gap-2 mb-4">
-          {paragraphs.map((p, idx) => (
-            <button 
-              key={idx} 
-              onClick={() => { 
-                setCurrentParagraphIndex(idx); 
-                setSelectedHeading(null); 
-                setShowResult(false); 
-              }}
-              className={`w-8 h-8 rounded-full text-sm font-medium transition-all flex items-center justify-center ${
-                idx === currentParagraphIndex ? 'bg-indigo-600 text-white shadow-md' : 
-                completedParagraphs.find(c => c.paragraphId === p.id) ? 'bg-indigo-100 text-indigo-600' : 'bg-gray-100 text-gray-400 hover:bg-gray-200'
-              }`}>
-              {p.id}
-            </button>
-          ))}
-        </div>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: 'calc(100vh - 180px)' }}>
 
-        {/* Selected heading badge above paragraph */}
-        {selectedHeadingObj && (
-          <div className="flex justify-center mb-3">
-            <div className="inline-flex items-center gap-2 bg-indigo-50 border border-indigo-200 rounded-full px-4 py-1.5">
-              <span className="w-5 h-5 bg-indigo-500 text-white rounded text-xs flex items-center justify-center font-bold">
-                {selectedHeadingObj.id.toUpperCase()}
-              </span>
-              <span className="text-sm text-indigo-700 font-medium">{selectedHeadingObj.textDe}</span>
-            </div>
-          </div>
-        )}
-
-        {/* Paragraph card */}
-        <div className="bg-white rounded-2xl border border-gray-200 p-6 md:p-8 shadow-sm">
-          <div className="flex items-start gap-4">
-            <span className="flex-shrink-0 w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-gray-500 text-sm font-medium">
-              {currentParagraph.id}
+      {/* Header Info */}
+      <div style={{
+        maxWidth: 1100, margin: '0 auto', width: '100%',
+        padding: '20px 24px 12px',
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+      }}>
+        <div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+            <span style={{
+              background: '#4f46e5', color: '#fff',
+              fontSize: 10, fontWeight: 800, padding: '2px 8px', borderRadius: 5,
+              letterSpacing: '0.05em',
+            }}>{level}</span>
+            <span style={{ fontSize: 10, fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+              FRAGE {questionIndex + 1} / {totalQuestions}
             </span>
-            <div className="flex-1">
-              <p className="text-gray-800 leading-relaxed text-sm md:text-base">{currentParagraph.contentDe}</p>
-              {showTranslation && (
-                <div className="mt-4 pt-4 border-t border-gray-100">
-                  <p className="text-emerald-600 leading-relaxed text-sm md:text-base font-medium" dir="rtl">
-                    {currentParagraph.contentAr}
-                  </p>
-                </div>
-              )}
-            </div>
           </div>
+          <h1 style={{ margin: 0, fontSize: 26, fontWeight: 800, color: '#0f172a', letterSpacing: '-0.02em' }}>
+            {titleDe}
+          </h1>
+          <p style={{ margin: '4px 0 0', fontSize: 12, fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.15em' }}>
+            LESEVERSTEHEN TEIL 1
+          </p>
         </div>
+        <button
+          onClick={onShowTranslation}
+          style={{
+            display: 'flex', alignItems: 'center', gap: 6,
+            padding: '7px 14px', borderRadius: 20,
+            border: `1.5px solid ${showTranslation ? '#10b981' : '#e2e8f0'}`,
+            background: showTranslation ? '#ecfdf5' : '#fff',
+            color: showTranslation ? '#059669' : '#64748b',
+            fontSize: 12, fontWeight: 600, cursor: 'pointer',
+            transition: 'all 0.15s',
+          }}
+        >
+          <FlagIcon />
+          {showTranslation ? 'إخفاء' : 'ترجمة'}
+        </button>
       </div>
 
-      {/* RIGHT: Headings */}
-      <div className="lg:w-[480px] flex-shrink-0">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-indigo-50 rounded-lg flex items-center justify-center">
-              <Icon name="check" size={16} className="text-indigo-500" />
-            </div>
-            <div>
-              <h3 className="text-sm font-bold text-gray-900">ÜBERSCHRIFTEN</h3>
-              <p className="text-[10px] text-indigo-500 font-medium">FÜR TEXT {currentParagraph.id}</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-gray-400 font-medium">{completedParagraphs.length}/{totalParagraphs}</span>
-            <button className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:text-indigo-500 transition-all">
-              <Icon name="shuffle" size={14} />
-            </button>
-            <button className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:text-indigo-500 transition-all">
-              <Icon name="type" size={14} />
-            </button>
-          </div>
-        </div>
+      {/* Main Content */}
+      <div style={{
+        maxWidth: 1100, margin: '0 auto', width: '100%',
+        padding: '0 24px 40px',
+        display: 'grid', gridTemplateColumns: '1fr 400px',
+        gap: 24, alignItems: 'start', flex: 1,
+      }}>
 
-        {/* Progress bar */}
-        <div className="w-full h-2 bg-gray-100 rounded-full mb-6 overflow-hidden">
-          <div 
-            className="h-full bg-indigo-500 rounded-full transition-all duration-300" 
-            style={{ width: `${((completedParagraphs.length + (showResult ? 1 : 0)) / totalParagraphs) * 100}%` }} 
-          />
-        </div>
+        {/* LEFT: Paragraphs */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
 
-        {/* Headings cards */}
-        <div className="space-y-3">
-          {headings.map((heading) => {
-            const isSelected = selectedHeading === heading.id;
-            const isCorrect = heading.id === currentParagraph.correctHeadingId;
-            let cardClass = 'bg-white border-gray-200 hover:border-indigo-200';
-            if (showResult) { 
-              if (isCorrect) cardClass = 'bg-white border-green-300'; 
-              else if (isSelected) cardClass = 'bg-white border-red-300'; 
+          {!checked && (
+            <div style={{
+              background: '#fff', border: '1.5px solid #c7d2fe', borderRadius: 14,
+              padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 10,
+              animation: 'fadeIn 0.3s ease',
+            }}>
+              <span style={{ fontSize: 20 }}>👆</span>
+              <div>
+                <p style={{ margin: 0, fontSize: 12, fontWeight: 700, color: '#3730a3' }}>
+                  Klicke auf einen Abschnitt, dann wähle die passende Überschrift rechts.
+                </p>
+                <p style={{ margin: '2px 0 0', fontSize: 11, color: '#6366f1', direction: 'rtl' }}>
+                  انقر على فقرة، ثم اختر العنوان المناسب من اليمين.
+                </p>
+              </div>
+            </div>
+          )}
+
+          {texts.map((text, idx) => {
+            const status = getStatus(text);
+            const isActive = activeParagraph === text.id && !checked;
+            const isLocked = locked.has(text.id);
+            const assignedHeading = headings.find(h => h.id === assignments[text.id]);
+            const correctHeading = headings.find(h => h.id === text.correctHeadingId);
+
+            let borderColor = '#e2e8f0';
+            let bgColor = '#fff';
+            let leftBar = 'transparent';
+            let shadow = '0 1px 3px rgba(0,0,0,0.04)';
+
+            if (checked) {
+              if (status === 'correct') { borderColor = '#86efac'; bgColor = '#f0fdf4'; leftBar = '#22c55e'; }
+              else { borderColor = '#fca5a5'; bgColor = '#fef2f2'; leftBar = '#ef4444'; }
+            } else if (isLocked) {
+              borderColor = '#a5b4fc'; bgColor = '#f5f3ff'; leftBar = '#6366f1';
+            } else if (isActive) {
+              borderColor = '#6366f1'; bgColor = '#fafafe'; leftBar = '#6366f1';
+              shadow = '0 4px 20px rgba(99,102,241,0.15)';
+            } else if (assignments[text.id]) {
+              borderColor = '#c7d2fe'; bgColor = '#fff'; leftBar = '#a5b4fc';
             }
-            else if (isSelected) cardClass = 'bg-white border-indigo-300';
 
             return (
-              <button 
-                key={heading.id} 
-                onClick={() => handleHeadingSelect(heading.id)} 
-                disabled={showResult}
-                className={`w-full text-left rounded-xl border p-4 transition-all duration-200 ${cardClass}`}>
-                <div className="flex items-start gap-3">
-                  <span className={`flex-shrink-0 w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold ${
-                    showResult 
-                      ? (isCorrect ? 'bg-green-500 text-white' : isSelected ? 'bg-red-500 text-white' : 'bg-gray-100 text-gray-400')
-                      : isSelected ? 'bg-indigo-500 text-white' : 'bg-gray-100 text-gray-500'
-                  }`}>
-                    {heading.id.toUpperCase()}
+              <div
+                key={text.id}
+                onClick={() => handleParagraphClick(text.id)}
+                style={{
+                  background: bgColor, border: `1.5px solid ${borderColor}`,
+                  borderRadius: 16, overflow: 'hidden',
+                  cursor: checked || isLocked ? 'default' : 'pointer',
+                  boxShadow: shadow,
+                  animation: `fadeUp ${0.08 + idx * 0.04}s ease both`,
+                  position: 'relative', transition: 'all 0.2s ease',
+                }}
+              >
+                <div style={{
+                  position: 'absolute', left: 0, top: 0, bottom: 0, width: 4,
+                  background: leftBar, borderRadius: '16px 0 0 16px',
+                }} />
+                <div style={{ padding: '14px 16px 14px 20px' }}>
+                  <div style={{
+                    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                    marginBottom: 8, gap: 10,
+                  }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                      <span style={{
+                        width: 26, height: 26, borderRadius: 7,
+                        background: checked
+                          ? (status === 'correct' ? '#22c55e' : '#ef4444')
+                          : isLocked ? '#6366f1'
+                          : isActive ? '#6366f1' : '#e2e8f0',
+                        color: (checked || isLocked || isActive) ? '#fff' : '#94a3b8',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        fontSize: 11, fontWeight: 800, flexShrink: 0,
+                      }}>
+                        {checked
+                          ? (status === 'correct' ? <CheckIcon size={14} /> : <XIcon size={14} />)
+                          : isLocked ? <CheckIcon size={14} />
+                          : idx + 1}
+                      </span>
+                      <span style={{
+                        fontSize: 10, fontWeight: 700, color: '#94a3b8',
+                        textTransform: 'uppercase', letterSpacing: '0.08em',
+                      }}>
+                        Abschnitt {idx + 1}
+                      </span>
+                    </div>
+
+                    {isLocked && assignedHeading && !checked && (
+                      <div style={{
+                        display: 'flex', alignItems: 'center', gap: 5,
+                        padding: '4px 8px', borderRadius: 7,
+                        background: '#eef2ff', border: '1.5px solid #a5b4fc',
+                        fontSize: 10, fontWeight: 600, color: '#4338ca',
+                      }}>
+                        <span style={{
+                          width: 16, height: 16, borderRadius: 4,
+                          background: '#6366f1', color: '#fff',
+                          display: 'flex', alignItems: 'center', justifyContent: 'center',
+                          fontSize: 8, fontWeight: 800,
+                        }}>{String(assignments[text.id]).toUpperCase()}</span>
+                        <span style={{ maxWidth: 180, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                          {assignedHeading.textDe}
+                        </span>
+                      </div>
+                    )}
+
+                    {checked && assignedHeading && (
+                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 2 }}>
+                        <div style={{
+                          display: 'flex', alignItems: 'center', gap: 4,
+                          padding: '4px 8px', borderRadius: 7,
+                          background: status === 'correct' ? '#dcfce7' : '#fee2e2',
+                          border: `1.5px solid ${status === 'correct' ? '#86efac' : '#fca5a5'}`,
+                          fontSize: 10, fontWeight: 600,
+                          color: status === 'correct' ? '#15803d' : '#b91c1c',
+                        }}>
+                          <span style={{
+                            width: 14, height: 14, borderRadius: 3,
+                            background: status === 'correct' ? '#16a34a' : '#ef4444',
+                            color: '#fff', fontSize: 7, fontWeight: 800,
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                          }}>{String(assignments[text.id] || '?').toUpperCase()}</span>
+                          <span style={{ maxWidth: 160, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                            {assignedHeading.textDe}
+                          </span>
+                        </div>
+                        {status === 'wrong' && correctHeading && (
+                          <div style={{
+                            display: 'flex', alignItems: 'center', gap: 3,
+                            fontSize: 9, color: '#16a34a', fontWeight: 600,
+                          }}>
+                            <span>✓</span>
+                            <span style={{
+                              width: 12, height: 12, borderRadius: 2,
+                              background: '#16a34a', color: '#fff',
+                              fontSize: 7, fontWeight: 800,
+                              display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            }}>{String(text.correctHeadingId).toUpperCase()}</span>
+                            <span style={{ maxWidth: 150, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                              {correctHeading.textDe}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+
+                  <p style={{ margin: 0, fontSize: 13, lineHeight: 1.7, color: '#334155' }}>
+                    {text.contentDe}
+                  </p>
+
+                  {showTranslation && text.contentAr && (
+                    <p style={{
+                      margin: '8px 0 0', fontSize: 12, lineHeight: 1.6, color: '#059669',
+                      direction: 'rtl', fontWeight: 500,
+                      borderTop: '1px dashed #d1fae5', paddingTop: 8,
+                    }}>
+                      {text.contentAr}
+                    </p>
+                  )}
+
+                  {isActive && !isLocked && assignments[text.id] && !checked && (
+                    <div style={{ marginTop: 12, display: 'flex', justifyContent: 'flex-end' }}>
+                      <button
+                        onClick={(e) => { e.stopPropagation(); handleConfirmParagraph(text.id); }}
+                        style={{
+                          display: 'flex', alignItems: 'center', gap: 5,
+                          padding: '7px 14px', borderRadius: 9,
+                          background: '#4f46e5', color: '#fff',
+                          border: 'none', cursor: 'pointer',
+                          fontSize: 12, fontWeight: 700,
+                          boxShadow: '0 2px 10px rgba(79,70,229,0.35)',
+                          transition: 'all 0.15s',
+                        }}
+                        onMouseEnter={e => { e.currentTarget.style.background = '#4338ca'; }}
+                        onMouseLeave={e => { e.currentTarget.style.background = '#4f46e5'; }}
+                      >
+                        <LockIcon size={13} /> Bestätigen
+                      </button>
+                    </div>
+                  )}
+
+                  {isLocked && !checked && (
+                    <div style={{ marginTop: 8, display: 'flex', justifyContent: 'flex-end' }}>
+                      <button
+                        onClick={(e) => { e.stopPropagation(); handleUnconfirmParagraph(text.id); }}
+                        style={{
+                          display: 'flex', alignItems: 'center', gap: 4,
+                          padding: '4px 10px', borderRadius: 7,
+                          background: 'transparent', border: '1.5px solid #c7d2fe',
+                          color: '#6366f1', fontSize: 10, fontWeight: 600,
+                          cursor: 'pointer', transition: 'all 0.15s',
+                        }}
+                        onMouseEnter={e => { e.currentTarget.style.background = '#eef2ff'; }}
+                        onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}
+                      >
+                        <UnlockIcon size={12} /> Bearbeiten
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+
+          {checked && (
+            <div style={{
+              marginTop: 4,
+              background: score / totalCount >= 0.7 ? '#f0fdf4' : '#fffbeb',
+              border: `1.5px solid ${score / totalCount >= 0.7 ? '#86efac' : '#fde68a'}`,
+              borderRadius: 14, padding: '16px 20px',
+              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+              animation: 'fadeUp 0.3s ease',
+            }}>
+              <div>
+                <p style={{ margin: 0, fontSize: 20, fontWeight: 800, color: '#0f172a' }}>
+                  {score} / {totalCount} richtig
+                </p>
+                <p style={{ margin: '4px 0 0', fontSize: 12, color: '#64748b' }}>
+                  {Math.round((score / totalCount) * 100)}% — {score / totalCount >= 0.7 ? '🎉 Sehr gut!' : '💪 Weiter üben!'}
+                </p>
+              </div>
+              <button
+                onClick={handleReset}
+                style={{
+                  padding: '8px 18px', borderRadius: 10,
+                  background: '#fff', border: '1.5px solid #e2e8f0',
+                  fontSize: 12, fontWeight: 700, color: '#374151',
+                  cursor: 'pointer', transition: 'all 0.15s',
+                }}
+              >
+                Nochmal versuchen
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* RIGHT: Headings Panel */}
+        <div style={{
+          position: 'sticky', top: 20,
+          background: '#fff', border: '1.5px solid #e2e8f0',
+          borderRadius: 16, overflow: 'hidden',
+          boxShadow: '0 4px 20px rgba(0,0,0,0.06)',
+          animation: 'slideIn 0.3s ease',
+        }}>
+          <div style={{
+            padding: '14px 18px', borderBottom: '1.5px solid #e2e8f0',
+            background: '#fafafa',
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          }}>
+            <div>
+              <p style={{
+                margin: 0, fontSize: 12, fontWeight: 800, color: '#0f172a',
+                textTransform: 'uppercase', letterSpacing: '0.06em',
+              }}>ÜBERSCHRIFTEN</p>
+              <p style={{
+                margin: '2px 0 0', fontSize: 9, fontWeight: 700, color: '#6366f1',
+                textTransform: 'uppercase', letterSpacing: '0.08em',
+              }}>FÜR TEXT {questionIndex + 1}</p>
+            </div>
+            <div style={{
+              width: 32, height: 32, borderRadius: '50%',
+              background: '#eef2ff',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6366f1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+            </div>
+          </div>
+
+          <div style={{
+            padding: '10px 16px', borderBottom: '1px solid #f1f5f9',
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          }}>
+            <span style={{ fontSize: 11, fontWeight: 700, color: '#64748b' }}>
+              {Object.keys(assignments).filter(k => assignments[k]).length} / {headings.length} zugeordnet
+            </span>
+            <span style={{ fontSize: 11, fontWeight: 800, color: '#6366f1' }}>
+              {confirmedCount} / {totalCount} bestätigt
+            </span>
+          </div>
+
+          <div style={{ padding: '6px' }}>
+            {!activeParagraph && !checked && (
+              <div style={{ padding: '24px 12px', textAlign: 'center', color: '#94a3b8' }}>
+                <div style={{
+                  width: 40, height: 40, borderRadius: 12, background: '#f1f5f9',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  margin: '0 auto 10px', fontSize: 20,
+                }}>👆</div>
+                <p style={{ margin: 0, fontSize: 12, fontWeight: 600 }}>Wähle zuerst einen Abschnitt</p>
+                <p style={{ margin: '2px 0 0', fontSize: 10, direction: 'rtl' }}>اختر أولاً فقرة</p>
+              </div>
+            )}
+
+            {headings.map((h, i) => {
+              const isAssignedHere = assignments[activeParagraph] === h.id;
+              const usedByOther = isHeadingUsed(h.id);
+              const assignedToPara = getAssignedParagraph(h.id);
+              const assignedParaIndex = assignedToPara ? texts.findIndex(t => t.id === assignedToPara) : -1;
+
+              let cardBg = '#fff';
+              let cardBorder = '#e2e8f0';
+              let cardOpacity = 1;
+              let cardCursor = 'pointer';
+
+              if (checked) {
+                const correctForActive = texts.find(t => t.id === activeParagraph)?.correctHeadingId === h.id;
+                if (activeParagraph && correctForActive) { cardBg = '#f0fdf4'; cardBorder = '#86efac'; }
+              } else {
+                if (!activeParagraph) { cardCursor = 'default'; }
+                if (isAssignedHere) { cardBg = '#eef2ff'; cardBorder = '#6366f1'; }
+                else if (usedByOther) { cardBg = '#f8fafc'; cardBorder = '#e2e8f0'; cardOpacity = 0.5; }
+              }
+
+              return (
+                <div
+                  key={h.id}
+                  onClick={() => handleHeadingClick(h.id)}
+                  style={{
+                    padding: '10px 12px', margin: '3px 0', borderRadius: 10,
+                    background: cardBg, border: `1.5px solid ${cardBorder}`,
+                    cursor: cardCursor, opacity: cardOpacity,
+                    transition: 'all 0.15s ease',
+                    display: 'flex', alignItems: 'flex-start', gap: 8,
+                    animation: `fadeUp ${0.05 + i * 0.03}s ease both`,
+                  }}
+                >
+                  <span style={{
+                    flexShrink: 0, width: 22, height: 22, borderRadius: 6,
+                    background: isAssignedHere ? '#6366f1' : usedByOther ? '#e2e8f0' : '#f1f5f9',
+                    color: isAssignedHere ? '#fff' : usedByOther ? '#94a3b8' : '#64748b',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontSize: 10, fontWeight: 800, marginTop: 1,
+                  }}>
+                    {String(h.id).toUpperCase()}
                   </span>
-                  <div className="flex-1">
-                    <p className="text-sm text-gray-800 font-medium leading-snug">{heading.textDe}</p>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <p style={{
+                      margin: 0, fontSize: 11.5, fontWeight: 600,
+                      color: usedByOther ? '#94a3b8' : '#1e293b', lineHeight: 1.4,
+                    }}>
+                      {h.textDe}
+                    </p>
                     {showTranslation && (
-                      <p className="text-sm text-emerald-600 mt-1 font-medium" dir="rtl">
-                        {heading.textAr}
+                      <p style={{
+                        margin: '2px 0 0', fontSize: 10, color: '#059669',
+                        direction: 'rtl', fontWeight: 500, lineHeight: 1.35,
+                      }}>
+                        {h.textAr}
+                      </p>
+                    )}
+                    {usedByOther && assignedParaIndex >= 0 && !checked && (
+                      <p style={{ margin: '3px 0 0', fontSize: 9, color: '#f59e0b', fontWeight: 600 }}>
+                        Abschnitt {assignedParaIndex + 1}
                       </p>
                     )}
                   </div>
-                  {showResult && isCorrect && (
-                    <Icon name="check" size={16} className="text-green-500 flex-shrink-0 mt-0.5" />
+                  {isAssignedHere && !checked && (
+                    <span style={{ color: '#6366f1', flexShrink: 0, marginTop: 3 }}>
+                      <CheckIcon size={14} />
+                    </span>
                   )}
                 </div>
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* BOTTOM BAR */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-3 z-50">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
-          <button 
-            onClick={handlePrevious} 
-            disabled={currentParagraphIndex === 0}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gray-100 text-gray-500 text-sm font-medium disabled:opacity-40 hover:bg-gray-200 transition-all">
-            <Icon name="arrow-left" size={14} />السابق
-          </button>
-          <div className="flex items-center gap-2">
-            {!showResult ? (
-              <button 
-                onClick={handleVerify} 
-                disabled={!selectedHeading}
-                className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-indigo-600 text-white text-sm font-medium disabled:opacity-40 hover:bg-indigo-700 transition-all">
-                <Icon name="check" size={14} />تحقق من الإجابات
-              </button>
-            ) : (
-              <>
-                <button 
-                  onClick={handleNext}
-                  className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-indigo-600 text-white text-sm font-medium hover:bg-indigo-700 transition-all">
-                  النتيجة<Icon name="check" size={14} />
-                </button>
-                {currentParagraphIndex < totalParagraphs - 1 && (
-                  <button 
-                    onClick={handleNext}
-                    className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-green-600 text-white text-sm font-medium hover:bg-green-700 transition-all">
-                    التالي<Icon name="arrow-right" size={14} />
-                  </button>
-                )}
-              </>
-            )}
+              );
+            })}
           </div>
+
+          {activeParagraph && !checked && (
+            <div style={{ padding: '10px 16px', borderTop: '1.5px solid #e2e8f0', background: '#fafafa' }}>
+              <p style={{ margin: 0, fontSize: 10, fontWeight: 700, color: '#6366f1', textAlign: 'center' }}>
+                Abschnitt {texts.findIndex(t => t.id === activeParagraph) + 1} ausgewählt
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>
   );
 };
 
-// ─── Teil 2: Multiple Choice ─────────────────────────────────────────────────
-const Teil2Exercise = ({ topic, showTranslation, onComplete }) => {
-  const [currentTextIndex, setCurrentTextIndex] = useState(0);
-  const [answers, setAnswers] = useState({});
-  const [showResult, setShowResult] = useState(false);
-  const [score, setScore] = useState(0);
+// ═══════════════════════════════════════════════════════════════════════════════
+// MAIN COMPONENT
+// ═══════════════════════════════════════════════════════════════════════════════
+const LesenExercise = () => {
+  // ✅ Hooks inside component
+  const navigate = useNavigate();
+  const { level, subTab, topicId } = useParams();
 
-  const texts = topic.texts || [];
-  const currentText = texts[currentTextIndex];
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [checkedQuestions, setCheckedQuestions] = useState(new Set());
+  const [showTranslation, setShowTranslation] = useState(false);
+  // ✅ Track score per question index
+  const [questionScores, setQuestionScores] = useState({});
 
-  if (!currentText) return <div className="text-center py-20 text-gray-400">Keine Texte verfügbar</div>;
-  if (!currentText.questions || !Array.isArray(currentText.questions)) {
-    return <div className="text-center py-20 text-red-500">Fehler: Keine Fragen gefunden.</div>;
-  }
+  const totalQuestions = allQuestions.length;
+  const currentData = allQuestions[currentQuestion];
+  const isChecked = checkedQuestions.has(currentQuestion);
+  const isFirst = currentQuestion === 0;
+  const isLast = currentQuestion === totalQuestions - 1;
 
-  const handleAnswerSelect = (questionId, optionId) => {
-    if (showResult) return;
-    setAnswers(prev => ({ ...prev, [questionId]: optionId }));
-  };
-
-  const handleVerify = () => {
-    const allAnswered = currentText.questions.every(q => answers[q.id]);
-    if (!allAnswered) return;
-    setShowResult(true);
-    let textScore = 0;
-    currentText.questions.forEach(q => { 
-      const opt = q.options?.find(o => o.id === answers[q.id]); 
-      if (opt?.correct) textScore++; 
-    });
-    setScore(prev => prev + textScore);
+  const handleCheckAnswers = () => {
+    setCheckedQuestions(prev => new Set([...prev, currentQuestion]));
   };
 
   const handleNext = () => {
-    if (currentTextIndex < texts.length - 1) {
-      setCurrentTextIndex(prev => prev + 1);
-      setAnswers({});
-      setShowResult(false);
-    } else {
-      const totalCorrect = score + currentText.questions.reduce((acc, q) => { 
-        const opt = q.options?.find(o => o.id === answers[q.id]); 
-        return acc + (opt?.correct ? 1 : 0); 
-      }, 0);
-      const totalAll = texts.reduce((acc, t) => acc + (t.questions?.length || 0), 0);
-      onComplete(totalCorrect, totalAll);
-    }
+    if (currentQuestion < totalQuestions - 1) setCurrentQuestion(prev => prev + 1);
+  };
+
+  const handlePrevious = () => {
+    if (currentQuestion > 0) setCurrentQuestion(prev => prev - 1);
+  };
+
+  // ✅ Callback received from SingleQuestion when checked
+  const handleScoreChange = (score) => {
+    setQuestionScores(prev => ({ ...prev, [currentQuestion]: score }));
+  };
+
+  // ✅ Navigate to result page with computed totals
+  const handleShowResult = () => {
+    let totalCorrect = 0;
+    let totalPossible = 0;
+
+    allQuestions.forEach((q, i) => {
+      totalPossible += q.texts.length;
+      if (questionScores[i] !== undefined) {
+        totalCorrect += questionScores[i];
+      }
+    });
+
+    const passingScore = Math.ceil(totalPossible * 0.6);
+
+    navigate(
+      `/dashboard-client/lesen/${level}/${subTab}/${topicId}/result`,
+      {
+        state: {
+          score: totalCorrect,
+          total: totalPossible,
+          passingScore,
+          examTitle: 'Lesen Teil 1',
+          examSubtitle: currentData.titleDe || '',
+          level: level || 'B2',
+          strengths: [],
+          improvements: [{ topic: 'Lesen Teil 1', message: 'نوصي بإعادة: Lesen Teil 1.' }],
+        },
+      }
+    );
+  };
+
+  const handleResetAll = () => {
+    setCurrentQuestion(0);
+    setCheckedQuestions(new Set());
+    setQuestionScores({});
   };
 
   return (
-    <div className="flex flex-col lg:flex-row gap-6">
-      <div className="flex-1">
-        <div className="flex items-center justify-center gap-2 mb-6">
-          {texts.map((_, idx) => (
-            <button key={idx} onClick={() => { setCurrentTextIndex(idx); setAnswers({}); setShowResult(false); }}
-              className={`px-4 py-1.5 rounded-full text-xs font-normal transition-all ${idx === currentTextIndex ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-400 hover:bg-gray-200'}`}>
-              Text {idx + 1}
+    <div style={{
+      fontFamily: "'Segoe UI', 'SF Pro Display', system-ui, -apple-system, sans-serif",
+      minHeight: '100vh',
+      background: '#f1f5f9',
+    }}>
+      <style>{`
+        @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+        @keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+        @keyframes slideIn { from { opacity:0; transform:translateX(12px); } to { opacity:1; transform:translateX(0); } }
+        * { box-sizing: border-box; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+      `}</style>
+
+      {/* Top Navigation Bar */}
+      <div style={{
+        background: '#fff', borderBottom: '1px solid #e2e8f0',
+        padding: '10px 24px',
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        position: 'sticky', top: 0, zIndex: 100,
+        boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <button
+            onClick={() => navigate(-1)}
+            style={{
+              width: 34, height: 34, borderRadius: 10,
+              border: '1.5px solid #e2e8f0', background: '#fff',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              cursor: 'pointer', color: '#64748b',
+            }}
+          >
+            <ArrowLeftIcon />
+          </button>
+          <div>
+            <p style={{ margin: 0, fontSize: 14, fontWeight: 700, color: '#0f172a' }}>Lesen Teil 1</p>
+            <p style={{ margin: 0, fontSize: 10, color: '#94a3b8' }}>{level} · {currentData.titleDe}</p>
+          </div>
+        </div>
+
+        {/* Question dots */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+          {allQuestions.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurrentQuestion(i)}
+              style={{
+                width: 28, height: 28, borderRadius: 8,
+                background: i === currentQuestion ? '#4f46e5' : checkedQuestions.has(i) ? '#10b981' : '#e2e8f0',
+                color: i === currentQuestion || checkedQuestions.has(i) ? '#fff' : '#94a3b8',
+                border: 'none',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: 11, fontWeight: 700, cursor: 'pointer',
+                transition: 'all 0.2s',
+                boxShadow: i === currentQuestion ? '0 0 0 3px #e0e7ff' : 'none',
+              }}
+            >
+              {i + 1}
             </button>
           ))}
         </div>
-        <div className="text-center mb-6">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">{currentText.titleDe}</h2>
-        </div>
-        <div className="bg-white rounded-2xl border border-gray-200 p-6 md:p-8 shadow-sm">
-          <p className="text-gray-800 leading-relaxed text-sm md:text-base">{currentText.contentDe}</p>
-          {showTranslation && (
-            <div className="mt-4 pt-4 border-t border-gray-100">
-              <p className="text-emerald-600 leading-relaxed text-sm md:text-base font-medium" dir="rtl">{currentText.contentAr}</p>
-            </div>
-          )}
-        </div>
-      </div>
-      <div className="lg:w-[480px] flex-shrink-0">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-indigo-50 rounded-lg flex items-center justify-center">
-              <Icon name="check" size={16} className="text-indigo-500" />
-            </div>
-            <div>
-              <h3 className="text-sm font-bold text-gray-900">FRAGEN</h3>
-              <p className="text-[10px] text-indigo-500">FÜR TEXT {currentText.id}</p>
-            </div>
-          </div>
-        </div>
-        <div className="space-y-6">
-          {currentText.questions.map((question, qIdx) => (
-            <div key={question.id} className="bg-white rounded-xl border border-gray-200 p-4">
-              <p className="text-sm font-medium text-gray-800 mb-3">{qIdx + 1}. {question.questionDe}</p>
-              {showTranslation && <p className="text-xs text-emerald-600 mb-3 font-medium" dir="rtl">{question.questionAr}</p>}
-              <div className="space-y-2">
-                {(question.options || []).map((option) => {
-                  const isSelected = answers[question.id] === option.id;
-                  let cardClass = 'border-gray-200 hover:border-indigo-200';
-                  if (showResult) { 
-                    if (option.correct) cardClass = 'bg-green-50 border-green-300'; 
-                    else if (isSelected) cardClass = 'bg-red-50 border-red-300'; 
-                  }
-                  else if (isSelected) cardClass = 'bg-indigo-50 border-indigo-300';
-                  return (
-                    <button key={option.id} onClick={() => handleAnswerSelect(question.id, option.id)} disabled={showResult}
-                      className={`w-full text-left rounded-lg border p-3 transition-all duration-200 ${cardClass}`}>
-                      <div className="flex items-center gap-2">
-                        <span className={`flex-shrink-0 w-5 h-5 rounded-full border-2 flex items-center justify-center text-[10px] font-bold ${
-                          showResult ? (option.correct ? 'bg-green-500 border-green-500 text-white' : isSelected ? 'bg-red-500 border-red-500 text-white' : 'border-gray-300')
-                          : isSelected ? 'bg-indigo-500 border-indigo-500 text-white' : 'border-gray-300'
-                        }`}>{option.id.toUpperCase()}</span>
-                        <div className="flex-1">
-                          <span className="text-sm text-gray-700">{option.textDe}</span>
-                          {showTranslation && <p className="text-xs text-emerald-600 mt-0.5 font-medium" dir="rtl">{option.textAr}</p>}
-                        </div>
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-3 z-50">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
-          <div />
-          <div className="flex items-center gap-2">
-            {!showResult ? (
-              <button onClick={handleVerify} disabled={!currentText.questions.every(q => answers[q.id])}
-                className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-indigo-600 text-white text-sm font-medium disabled:opacity-40 hover:bg-indigo-700 transition-all">
-                <Icon name="check" size={14} />تحقق من الإجابات
-              </button>
-            ) : (
-              <button onClick={handleNext}
-                className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-indigo-600 text-white text-sm font-medium hover:bg-indigo-700 transition-all">
-                {currentTextIndex < texts.length - 1 ? 'التالي' : 'النتيجة'}<Icon name="arrow-right" size={14} />
-              </button>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
 
-// ─── Teil 3: Richtig/Falsch ──────────────────────────────────────────────────
-const Teil3Exercise = ({ topic, showTranslation, onComplete }) => {
-  const [currentTextIndex, setCurrentTextIndex] = useState(0);
-  const [answers, setAnswers] = useState({});
-  const [showResult, setShowResult] = useState(false);
-  const [score, setScore] = useState(0);
-
-  const texts = topic.texts || [];
-  const currentText = texts[currentTextIndex];
-
-  if (!currentText) return <div className="text-center py-20 text-gray-400">Keine Texte verfügbar</div>;
-  if (!currentText.statements || !Array.isArray(currentText.statements)) {
-    return <div className="text-center py-20 text-red-500">Fehler: Keine Statements gefunden.</div>;
-  }
-
-  const handleAnswer = (statementId, value) => {
-    if (showResult) return;
-    setAnswers(prev => ({ ...prev, [statementId]: value }));
-  };
-
-  const handleVerify = () => {
-    const allAnswered = currentText.statements.every(s => answers[s.id] !== undefined);
-    if (!allAnswered) return;
-    setShowResult(true);
-    let textScore = 0;
-    currentText.statements.forEach(s => { if (answers[s.id] === s.correct) textScore++; });
-    setScore(prev => prev + textScore);
-  };
-
-  const handleNext = () => {
-    if (currentTextIndex < texts.length - 1) {
-      setCurrentTextIndex(prev => prev + 1);
-      setAnswers({});
-      setShowResult(false);
-    } else {
-      const totalCorrect = score + currentText.statements.reduce((acc, s) => acc + (answers[s.id] === s.correct ? 1 : 0), 0);
-      const totalAll = texts.reduce((acc, t) => acc + (t.statements?.length || 0), 0);
-      onComplete(totalCorrect, totalAll);
-    }
-  };
-
-  return (
-    <div className="flex flex-col lg:flex-row gap-6">
-      <div className="flex-1">
-        <div className="text-center mb-6">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">{currentText.titleDe}</h2>
-        </div>
-        <div className="bg-white rounded-2xl border border-gray-200 p-6 md:p-8 shadow-sm">
-          <p className="text-gray-800 leading-relaxed text-sm md:text-base">{currentText.contentDe}</p>
-          {showTranslation && (
-            <div className="mt-4 pt-4 border-t border-gray-100">
-              <p className="text-emerald-600 leading-relaxed text-sm md:text-base font-medium" dir="rtl">{currentText.contentAr}</p>
-            </div>
-          )}
-        </div>
-      </div>
-      <div className="lg:w-[480px] flex-shrink-0">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-indigo-50 rounded-lg flex items-center justify-center">
-              <Icon name="check" size={16} className="text-indigo-500" />
-            </div>
-            <div>
-              <h3 className="text-sm font-bold text-gray-900">RICHTIG / FALSCH</h3>
-              <p className="text-[10px] text-indigo-500">FÜR TEXT {currentText.id}</p>
-            </div>
-          </div>
-        </div>
-        <div className="space-y-4">
-          {currentText.statements.map((statement, sIdx) => (
-            <div key={statement.id} className="bg-white rounded-xl border border-gray-200 p-4">
-              <p className="text-sm text-gray-800 mb-2">{sIdx + 1}. {statement.textDe}</p>
-              {showTranslation && <p className="text-xs text-emerald-600 mb-3 font-medium" dir="rtl">{statement.textAr}</p>}
-              <div className="flex gap-2">
-                <button onClick={() => handleAnswer(statement.id, true)} disabled={showResult}
-                  className={`flex-1 py-2 rounded-lg text-sm font-medium transition-all ${
-                    showResult ? (statement.correct ? 'bg-green-500 text-white' : answers[statement.id] === true && !statement.correct ? 'bg-red-500 text-white' : 'bg-gray-100 text-gray-400')
-                    : answers[statement.id] === true ? 'bg-green-500 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                  }`}>Richtig</button>
-                <button onClick={() => handleAnswer(statement.id, false)} disabled={showResult}
-                  className={`flex-1 py-2 rounded-lg text-sm font-medium transition-all ${
-                    showResult ? (!statement.correct ? 'bg-green-500 text-white' : answers[statement.id] === false && statement.correct ? 'bg-red-500 text-white' : 'bg-gray-100 text-gray-400')
-                    : answers[statement.id] === false ? 'bg-red-500 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                  }`}>Falsch</button>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-3 z-50">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
-          <div />
-          <div className="flex items-center gap-2">
-            {!showResult ? (
-              <button onClick={handleVerify} disabled={!currentText.statements.every(s => answers[s.id] !== undefined)}
-                className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-indigo-600 text-white text-sm font-medium disabled:opacity-40 hover:bg-indigo-700 transition-all">
-                <Icon name="check" size={14} />تحقق من الإجابات
-              </button>
-            ) : (
-              <button onClick={handleNext}
-                className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-indigo-600 text-white text-sm font-medium hover:bg-indigo-700 transition-all">
-                {currentTextIndex < texts.length - 1 ? 'التالي' : 'النتيجة'}<Icon name="arrow-right" size={14} />
-              </button>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// ─── Sprach 1 & 2: Input exercises ────────────────────────────────────────────
-const SprachExercise = ({ topic, showTranslation, onComplete }) => {
-  const [currentExIndex, setCurrentExIndex] = useState(0);
-  const [answers, setAnswers] = useState({});
-  const [showResult, setShowResult] = useState(false);
-
-  const exercises = topic.exercises || [];
-  const currentEx = exercises[currentExIndex];
-
-  if (!currentEx) return <div className="text-center py-20 text-gray-400">Keine Übungen verfügbar</div>;
-  if (!currentEx.items || !Array.isArray(currentEx.items)) {
-    return <div className="text-center py-20 text-red-500">Fehler: Keine Items gefunden.</div>;
-  }
-
-  const handleAnswer = (itemId, value) => {
-    if (showResult) return;
-    setAnswers(prev => ({ ...prev, [itemId]: value }));
-  };
-
-  const handleVerify = () => {
-    const allAnswered = currentEx.items.every(i => answers[i.id]?.trim());
-    if (!allAnswered) return;
-    setShowResult(true);
-  };
-
-  const handleNext = () => {
-    if (currentExIndex < exercises.length - 1) {
-      setCurrentExIndex(prev => prev + 1);
-      setAnswers({});
-      setShowResult(false);
-    } else {
-      let correct = 0, total = 0;
-      exercises.forEach(ex => { 
-        (ex.items || []).forEach(item => {
-          total++;
-          if (answers[item.id]?.toLowerCase().trim() === (item.answer || '').toLowerCase().trim()) correct++;
-        });
-      });
-      onComplete(correct, total);
-    }
-  };
-
-  return (
-    <div className="max-w-3xl mx-auto">
-      <div className="text-center mb-6">
-        <p className="text-xs text-indigo-500 uppercase tracking-widest mb-2">{currentEx.instructionDe}</p>
-        {showTranslation && <p className="text-xs text-emerald-600 font-medium" dir="rtl">{currentEx.instructionAr}</p>}
-      </div>
-      <div className="space-y-4">
-        {currentEx.items.map((item, idx) => {
-          const userAnswer = answers[item.id] || '';
-          const isCorrect = showResult && userAnswer.toLowerCase().trim() === (item.answer || '').toLowerCase().trim();
-          const isWrong = showResult && !isCorrect && userAnswer;
-          return (
-            <div key={item.id} className={`bg-white rounded-xl border p-4 transition-all ${isCorrect ? 'border-green-300 bg-green-50' : isWrong ? 'border-red-300 bg-red-50' : 'border-gray-200'}`}>
-              <div className="flex items-start gap-3">
-                <span className="flex-shrink-0 w-7 h-7 bg-gray-100 rounded-full flex items-center justify-center text-xs font-medium text-gray-500">{idx + 1}</span>
-                <div className="flex-1">
-                  <p className="text-sm text-gray-800 mb-2">{item.textDe}</p>
-                  {showTranslation && <p className="text-xs text-emerald-600 mb-2 font-medium" dir="rtl">{item.textAr}</p>}
-                  <input type="text" value={userAnswer} onChange={(e) => handleAnswer(item.id, e.target.value)} disabled={showResult}
-                    placeholder={showTranslation ? "أكتب الإجابة..." : "Antwort..."}
-                    className={`w-full border rounded-lg px-3 py-2 text-sm outline-none transition-all ${
-                      isCorrect ? 'border-green-300 bg-green-100 text-green-800' : isWrong ? 'border-red-300 bg-red-100 text-red-800' : 'border-gray-200 focus:border-indigo-300 focus:ring-2 focus:ring-indigo-100'
-                    }`} />
-                  {showResult && <p className={`text-xs mt-1 ${isCorrect ? 'text-green-600' : 'text-red-600'}`}>{isCorrect ? '✓ Richtig!' : `✗ Falsch! Richtig: ${item.answer}`}</p>}
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-3 z-50">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
-          <div />
-          <div className="flex items-center gap-2">
-            {!showResult ? (
-              <button onClick={handleVerify} disabled={!currentEx.items.every(i => answers[i.id]?.trim())}
-                className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-indigo-600 text-white text-sm font-medium disabled:opacity-40 hover:bg-indigo-700 transition-all">
-                <Icon name="check" size={14} />تحقق من الإجابات
-              </button>
-            ) : (
-              <button onClick={handleNext}
-                className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-indigo-600 text-white text-sm font-medium hover:bg-indigo-700 transition-all">
-                {currentExIndex < exercises.length - 1 ? 'التالي' : 'النتيجة'}<Icon name="arrow-right" size={14} />
-              </button>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// ─── Result Screen ─────────────────────────────────────────────────────────────
-const ResultScreen = ({ score, total, onRetry, onBack }) => (
-  <div className="min-h-screen flex items-center justify-center bg-gray-50">
-    <div className="bg-white rounded-3xl border border-gray-200 shadow-lg p-8 md:p-12 max-w-md w-full mx-4 text-center">
-      <div className="w-20 h-20 bg-indigo-50 rounded-full flex items-center justify-center mx-auto mb-6">
-        <Icon name="check" size={32} className="text-indigo-500" />
-      </div>
-      <h2 className="text-2xl font-bold text-gray-900 mb-2">النتيجة</h2>
-      <p className="text-gray-500 mb-6">لقد أكملت التمرين بنجاح!</p>
-      <div className="bg-gray-50 rounded-2xl p-6 mb-8">
-        <div className="text-4xl font-bold text-indigo-600 mb-1">{score} <span className="text-gray-400 text-2xl">/ {total}</span></div>
-        <p className="text-sm text-gray-400">{total > 0 ? Math.round((score / total) * 100) : 0}% نسبة النجاح</p>
-      </div>
-      <div className="flex gap-3">
-        <button onClick={onRetry} className="flex-1 py-3 rounded-xl bg-indigo-600 text-white text-sm font-medium hover:bg-indigo-700 transition-all">إعادة المحاولة</button>
-        <button onClick={onBack} className="flex-1 py-3 rounded-xl bg-gray-100 text-gray-600 text-sm font-medium hover:bg-gray-200 transition-all">العودة للقائمة</button>
-      </div>
-    </div>
-  </div>
-);
-
-// ─── Main Exercise Page ───────────────────────────────────────────────────────
-const LesenExercise = () => {
-  const { level, subTab, topicId } = useParams();
-  const navigate = useNavigate();
-  const [showTranslation, setShowTranslation] = useState(false);
-  const [isCompleted, setIsCompleted] = useState(false);
-  const [finalScore, setFinalScore] = useState(0);
-  const [finalTotal, setFinalTotal] = useState(0);
-  const [topic, setTopic] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const load = async () => {
-      setLoading(true);
-      setError(null);
-      console.log('Loading topic:', { level, subTab, topicId });
-      const data = await loadTopic(level.toUpperCase(), subTab, topicId);
-      console.log('Loaded data:', data);
-      if (!data) {
-        setError(`Topic not found: ${topicId} in ${level}/${subTab}`);
-      } else {
-        setTopic(data);
-      }
-      setLoading(false);
-    };
-    load();
-  }, [level, subTab, topicId]);
-
-  const handleComplete = (score, total) => {
-    setFinalScore(score);
-    setFinalTotal(total);
-    setIsCompleted(true);
-  };
-
-  const handleRetry = () => { 
-    setIsCompleted(false); 
-    setFinalScore(0); 
-    setFinalTotal(0); 
-  };
-
-  if (loading) return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <p className="text-gray-400">جاري التحميل...</p>
-    </div>
-  );
-
-  if (error) return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="text-center bg-white rounded-2xl border border-red-200 p-8 max-w-md mx-4">
-        <p className="text-red-600 font-bold mb-2">❌ Error</p>
-        <p className="text-gray-600 text-sm mb-4">{error}</p>
-        <div className="text-left bg-gray-100 rounded-lg p-3 text-xs text-gray-500 mb-4">
-          <p className="font-bold mb-1">Route params:</p>
-          <p>level: {level}</p>
-          <p>subTab: {subTab}</p>
-          <p>topicId: {topicId}</p>
-        </div>
-        <button onClick={() => navigate('/dashboard-client/lesen')} className="px-6 py-2 bg-indigo-600 text-white rounded-xl text-sm hover:bg-indigo-700 transition-all">
-          العودة
+        <button style={{
+          width: 34, height: 34, borderRadius: '50%',
+          border: '1.5px solid #e2e8f0', background: '#fff',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          cursor: 'pointer', color: '#f59e0b',
+        }}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
         </button>
       </div>
-    </div>
-  );
 
-  if (!topic) return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="text-center">
-        <p className="text-gray-500 mb-4">الموضوع غير موجود</p>
-        <button onClick={() => navigate('/dashboard-client/lesen')} className="px-6 py-2 bg-indigo-600 text-white rounded-xl text-sm hover:bg-indigo-700 transition-all">
-          العودة
-        </button>
-      </div>
-    </div>
-  );
+      {/* Question Content */}
+      <SingleQuestion
+        key={currentQuestion}
+        data={currentData}
+        questionIndex={currentQuestion}
+        totalQuestions={totalQuestions}
+        showTranslation={showTranslation}
+        onShowTranslation={() => setShowTranslation(s => !s)}
+        checked={isChecked}
+        onScoreChange={handleScoreChange}
+      />
 
-  if (isCompleted) return (
-    <ResultScreen 
-      score={finalScore} 
-      total={finalTotal} 
-      onRetry={handleRetry} 
-      onBack={() => navigate('/dashboard-client/lesen')} 
-    />
-  );
+      {/* Bottom Navigation Bar */}
+      <div style={{
+        position: 'fixed', bottom: 0, left: 0, right: 0,
+        background: 'rgba(255,255,255,0.98)',
+        backdropFilter: 'blur(12px)',
+        borderTop: '1px solid #e2e8f0',
+        padding: '14px 24px', zIndex: 90,
+        boxShadow: '0 -4px 20px rgba(0,0,0,0.04)',
+      }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
 
-  const getPageTitle = () => {
-    switch (subTab) {
-      case 'teil1': return 'Lesen Teil 1';
-      case 'teil2': return 'Lesen Teil 2';
-      case 'teil3': return 'Lesen Teil 3';
-      case 'sprach1': return 'Sprachbausteine 1';
-      case 'sprach2': return 'Sprachbausteine 2';
-      default: return 'Leseverstehen';
-    }
-  };
+          {/* Check Answers */}
+          <button
+            onClick={handleCheckAnswers}
+            disabled={isChecked}
+            style={{
+              display: 'flex', alignItems: 'center', gap: 8,
+              padding: '10px 20px', borderRadius: 12,
+              background: isChecked ? '#e2e8f0' : '#4f46e5',
+              color: isChecked ? '#94a3b8' : '#fff',
+              border: 'none', cursor: isChecked ? 'not-allowed' : 'pointer',
+              fontSize: 13, fontWeight: 700,
+              boxShadow: isChecked ? 'none' : '0 4px 16px rgba(79,70,229,0.35)',
+              transition: 'all 0.2s',
+            }}
+          >
+            <VerifyIcon />
+            تحقق من الإجابات
+          </button>
 
-  // Auto-detect based on data structure
-  const hasHeadings = topic.headings && Array.isArray(topic.headings);
-  const hasQuestions = topic.texts?.[0]?.questions && Array.isArray(topic.texts[0].questions);
-  const hasStatements = topic.texts?.[0]?.statements && Array.isArray(topic.texts[0].statements);
-  const hasExercises = topic.exercises && Array.isArray(topic.exercises);
-
-  return (
-    <div className="min-h-screen bg-gray-50 font-['Cairo',sans-serif] relative pb-20">
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{
-        backgroundImage: `linear-gradient(#6366f1 1px, transparent 1px), linear-gradient(90deg, #6366f1 1px, transparent 1px)`,
-        backgroundSize: '60px 60px',
-      }} />
-      <div className="relative">
-        {/* Header */}
-        <div className="bg-white border-b border-gray-200 px-4 md:px-8 py-3">
-          <div className="max-w-7xl mx-auto flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <button onClick={() => navigate('/dashboard-client/lesen')} className="w-9 h-9 rounded-xl bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-gray-200 transition-all">
-                <Icon name="arrow-left" size={16} />
-              </button>
-              <div>
-                <div className="flex items-center gap-2">
-                  <span className="bg-indigo-50 text-indigo-600 text-[10px] font-bold px-2 py-0.5 rounded-md">{level.toUpperCase()}</span>
-                  <span className="text-[10px] text-gray-400 uppercase tracking-wider">SESSION</span>
-                </div>
-                <h1 className="text-lg font-bold text-gray-900">{getPageTitle()}</h1>
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <button onClick={() => setShowTranslation(!showTranslation)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${showTranslation ? 'bg-red-50 border-red-200 text-red-600' : 'bg-white border-gray-200 text-gray-500 hover:border-indigo-200 hover:text-indigo-600'}`}>
-                <Icon name="flag" size={12} />{showTranslation ? 'إخفاء الترجمة' : 'الإبلاغ عن خطأ'}
-              </button>
-              <button className="w-9 h-9 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:text-indigo-500 hover:border-indigo-200 transition-all">
-                <Icon name="moon" size={16} />
-              </button>
+          {/* Progress */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <span style={{ fontSize: 12, fontWeight: 700, color: '#64748b' }}>
+              Frage {currentQuestion + 1} / {totalQuestions}
+            </span>
+            <div style={{ width: 120, height: 4, background: '#e2e8f0', borderRadius: 99, overflow: 'hidden' }}>
+              <div style={{
+                width: `${((currentQuestion + 1) / totalQuestions) * 100}%`,
+                height: '100%', background: '#4f46e5', borderRadius: 99, transition: 'width 0.4s',
+              }} />
             </div>
           </div>
-        </div>
 
-        {/* Content */}
-        <div className="px-4 md:px-8 lg:px-12 py-6 max-w-7xl mx-auto">
-          {(subTab === 'teil1' || hasHeadings) && <Teil1Exercise topic={topic} showTranslation={showTranslation} onComplete={handleComplete} />}
-          {(subTab === 'teil2' || hasQuestions) && !hasHeadings && <Teil2Exercise topic={topic} showTranslation={showTranslation} onComplete={handleComplete} />}
-          {(subTab === 'teil3' || hasStatements) && !hasHeadings && !hasQuestions && <Teil3Exercise topic={topic} showTranslation={showTranslation} onComplete={handleComplete} />}
-          {((subTab === 'sprach1' || subTab === 'sprach2') || hasExercises) && !hasHeadings && !hasQuestions && !hasStatements && <SprachExercise topic={topic} showTranslation={showTranslation} onComplete={handleComplete} />}
+          {/* Prev / Result / Next */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <button
+              onClick={handlePrevious}
+              disabled={isFirst}
+              style={{
+                display: 'flex', alignItems: 'center', gap: 6,
+                padding: '10px 18px', borderRadius: 12,
+                background: isFirst ? '#f1f5f9' : '#fff',
+                color: isFirst ? '#cbd5e1' : '#64748b',
+                border: '1.5px solid #e2e8f0',
+                cursor: isFirst ? 'not-allowed' : 'pointer',
+                fontSize: 13, fontWeight: 700, transition: 'all 0.15s',
+              }}
+            >
+              <ArrowLeftIcon /> السابق
+            </button>
+
+            {/* ✅ Result button navigates to result page */}
+            <button
+              onClick={handleShowResult}
+              style={{
+                display: 'flex', alignItems: 'center', gap: 6,
+                padding: '10px 18px', borderRadius: 12,
+                background: '#fff', color: '#4f46e5',
+                border: '1.5px solid #c7d2fe',
+                cursor: 'pointer', fontSize: 13, fontWeight: 700, transition: 'all 0.15s',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = '#eef2ff'; }}
+              onMouseLeave={e => { e.currentTarget.style.background = '#fff'; }}
+            >
+              <ResultIcon /> النتيجة
+            </button>
+
+            <button
+              onClick={handleNext}
+              disabled={isLast}
+              style={{
+                display: 'flex', alignItems: 'center', gap: 6,
+                padding: '10px 20px', borderRadius: 12,
+                background: isLast ? '#f1f5f9' : '#4f46e5',
+                color: isLast ? '#cbd5e1' : '#fff',
+                border: 'none', cursor: isLast ? 'not-allowed' : 'pointer',
+                fontSize: 13, fontWeight: 700, transition: 'all 0.2s',
+                boxShadow: isLast ? 'none' : '0 4px 16px rgba(79,70,229,0.35)',
+              }}
+              onMouseEnter={e => { if (!isLast) { e.currentTarget.style.background = '#4338ca'; e.currentTarget.style.transform = 'translateY(-1px)'; }}}
+              onMouseLeave={e => { if (!isLast) { e.currentTarget.style.background = '#4f46e5'; e.currentTarget.style.transform = 'translateY(0)'; }}}
+            >
+              التالي <ArrowRightIcon />
+            </button>
+          </div>
         </div>
       </div>
     </div>

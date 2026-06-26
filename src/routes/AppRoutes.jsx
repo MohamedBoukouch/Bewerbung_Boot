@@ -12,6 +12,9 @@ import Signup from "../pages/Signup";
 import DashboardClient from "../pages/DashboardClient";
 import Lesen from "../pages/Lesen";
 import LesenExercise from "../pages/LesenExercise";
+import SprachbausteineExercise from "../pages/SprachbausteineExercise";
+
+import ResultPage from "../components/layout/clients/ResultPage_Usage";
 
 export default function AppRoutes() {
   return (
@@ -22,13 +25,20 @@ export default function AppRoutes() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/billing" element={<Billing />} />
       </Route>
-      
-<Route path="/dashboard-client" element={<DashboardLayout />}>
-  <Route index element={<DashboardClient />} />
-  <Route path="lesen" element={<Lesen />} />
-  <Route path="lesen/:level/:subTab/:topicId" element={<LesenExercise />} />
-</Route>
 
+      <Route path="/dashboard-client" element={<DashboardLayout />}>
+        <Route index element={<DashboardClient />} />
+
+        {/* Lesen routes */}
+        <Route path="lesen" element={<Lesen />} />
+        <Route path="lesen/:level/:subTab/:topicId" element={<LesenExercise />} />
+        <Route path="lesen/:level/:subTab/:topicId/result" element={<ResultPage />} />
+
+        {/* Sprachbausteine routes - FIXED: relative paths + added result route */}
+        <Route path="sprachbausteine" element={<Lesen />} />
+        <Route path="sprachbausteine/:level/:subTab/:topicId" element={<SprachbausteineExercise />} />
+        <Route path="sprachbausteine/:level/:subTab/:topicId/result" element={<ResultPage />} />
+      </Route>
     </Routes>
   );
 }
