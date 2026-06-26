@@ -1,0 +1,69 @@
+{
+  "id": "b1-t2-1",
+  "titleDe": "Familie - Teil 2",
+  "titleAr": "العائلة - الجزء 2",
+  "level": "B1",
+  "duration": 20,
+  "parts": 0,
+  "type": "teil2",
+  "texts": [
+    {
+      "id": 1,
+      "titleDe": "Text 1: Familie und Beruf",
+      "contentDe": "Viele Frauen in Deutschland möchten...",
+      "contentAr": "العديد من النساء...",
+      "questions": [
+        {
+          "id": "q1",
+          "questionDe": "Was ist ein großes Problem?",
+          "questionAr": "ما هي المشكلة؟",
+          "options": [
+            {
+              "id": "a",
+              "textDe": "Zu viele Kitas",
+              "textAr": "كثيرة",
+              "correct": false
+            },
+            {
+              "id": "b",
+              "textDe": "Zu wenige Kitas",
+              "textAr": "قليلة",
+              "correct": true
+            },
+            {
+              "id": "c",
+              "textDe": "Zu teure Kitas",
+              "textAr": "مكلفة",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "id": "q2",
+          "questionDe": "Wie unterstützt der Staat?",
+          "questionAr": "كيف تدعم الدولة؟",
+          "options": [
+            {
+              "id": "a",
+              "textDe": "Mit Maßnahmen",
+              "textAr": "بإجراءات",
+              "correct": true
+            },
+            {
+              "id": "b",
+              "textDe": "Gar nicht",
+              "textAr": "لا",
+              "correct": false
+            },
+            {
+              "id": "c",
+              "textDe": "Nur mit Geld",
+              "textAr": "فقط بالمال",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

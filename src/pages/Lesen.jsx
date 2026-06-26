@@ -1,15 +1,15 @@
-import React, { useState, useMemo } from 'react';
-import lesenData from '../data/lesenData.json';
+import React, { useState, useMemo, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-// ─── Sub-tabs config ────────────────────────────────────────────────────────
-const SUB_TABS = [
-  { key: 'pruefungen', labelDe: 'Prüfungen',  icon: 'book'    },
-  { key: 'teil1',      labelDe: 'Teil 1',      icon: 'file'    },
-  { key: 'teil2',      labelDe: 'Teil 2',      icon: 'file'    },
-  { key: 'teil3',      labelDe: 'Teil 3',      icon: 'file'    },
-  { key: 'sprach1',    labelDe: 'Sprach 1',    icon: 'wrench'  },
-  { key: 'sprach2',    labelDe: 'Sprach 2',    icon: 'wrench'  },
-];
+// ─── Sub-tabs config ──────────────────────────────────────────────────────────
+const SUB_TAB_CONFIG = {
+  pruefungen: { labelDe: 'Prüfungen', labelAr: 'الاختبارات', icon: 'book' },
+  teil1:      { labelDe: 'Teil 1',    labelAr: 'الجزء 1',      icon: 'file' },
+  teil2:      { labelDe: 'Teil 2',    labelAr: 'الجزء 2',      icon: 'file' },
+  teil3:      { labelDe: 'Teil 3',    labelAr: 'الجزء 3',      icon: 'file' },
+  sprach1:    { labelDe: 'Sprach 1',  labelAr: 'اللغة 1',      icon: 'wrench' },
+  sprach2:    { labelDe: 'Sprach 2',  labelAr: 'اللغة 2',      icon: 'wrench' },
+};
 
 // ─── Icons ───────────────────────────────────────────────────────────────────
 const Icon = ({ name, size = 16, className = '' }) => {
@@ -50,221 +50,168 @@ const Icon = ({ name, size = 16, className = '' }) => {
       <line x1="7" y1="15" x2="17" y2="15"/>
     </svg>
   );
-  if (name === 'arrow-left') return (
+  if (name === 'chevron-left') return (
     <svg style={s} className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
-    </svg>
-  );
-  if (name === 'chevron-right') return (
-    <svg style={s} className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <polyline points="9 18 15 12 9 6"/>
+      <polyline points="15 18 9 12 15 6"/>
     </svg>
   );
   return null;
 };
 
-// ─── TopicCard component ──────────────────────────────────────────────────────
+// ─── TopicCard ───────────────────────────────────────────────────────────────
 const TopicCard = ({ topic, onClick }) => (
   <button
     onClick={() => onClick(topic)}
     className="w-full text-left bg-white rounded-2xl border border-gray-200 p-5 hover:border-indigo-200 hover:shadow-md hover:shadow-indigo-100/30 transition-all duration-200 group"
   >
-    {/* Top row */}
     <div className="flex items-start justify-between gap-3 mb-4">
-      <div className="flex-1 text-right" dir="rtl">
-        <span className="text-gray-900 font-semibold text-base leading-snug">
-          {topic.titleDe}{' '}
-          <span className="text-gray-400 font-normal text-sm">({topic.titleAr})</span>
-        </span>
+      <div className="flex-1 text-left">
+        <span className="text-gray-900 font-normal text-sm leading-snug block">{topic.titleDe}</span>
+        <span className="text-gray-400 font-normal text-xs block mt-1">{topic.titleAr}</span>
       </div>
-      <span className="flex-shrink-0 bg-indigo-50 text-indigo-500 text-xs font-bold px-2.5 py-1 rounded-lg border border-indigo-100">
-        {topic.level}
-      </span>
+      <span className="flex-shrink-0 bg-indigo-50 text-indigo-500 text-[10px] font-normal px-2 py-0.5 rounded-md border border-indigo-100">{topic.level}</span>
     </div>
-
-    {/* Bottom row */}
-    <div className="flex items-center justify-between" dir="rtl">
-      <div className="flex items-center gap-4 text-gray-400 text-sm">
-        <span className="flex items-center gap-1.5">
-          <Icon name="clock" size={14} />
-          <span>{topic.duration} min</span>
-        </span>
-        {topic.parts > 0 && (
-          <span className="flex items-center gap-1.5 text-indigo-400">
-            <Icon name="layers" size={14} />
-            <span>+{topic.parts}</span>
-          </span>
-        )}
+    <div className="flex items-center justify-between">
+      <div className="flex items-center gap-4 text-gray-400 text-xs">
+        <span className="flex items-center gap-1"><Icon name="clock" size={13} /><span>{topic.duration} min</span></span>
+        {topic.parts > 0 && <span className="flex items-center gap-1 text-indigo-400"><Icon name="layers" size={13} /><span>+{topic.parts}</span></span>}
       </div>
-      <span className="text-gray-300 group-hover:text-indigo-400 transition-colors">
-        <Icon name="chevron-right" size={18} />
-      </span>
+      <span className="text-gray-300 group-hover:text-indigo-400 transition-colors"><Icon name="chevron-left" size={16} /></span>
     </div>
   </button>
 );
 
 // ─── Main Page ────────────────────────────────────────────────────────────────
 const Lesen = () => {
-  const [levelTab, setLevelTab]   = useState('b2');   // 'b1' | 'b2'
-  const [subTab, setSubTab]       = useState('pruefungen');
-  const [search, setSearch]       = useState('');
+  const navigate = useNavigate();
+  const [levelTab, setLevelTab] = useState('B2');
+  const [subTab, setSubTab] = useState('teil1');
+  const [search, setSearch] = useState('');
+  const [levelData, setLevelData] = useState({});
+  const [availableSubTabs, setAvailableSubTabs] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const allTopics = lesenData[levelTab] ?? [];
-  const totalCount = lesenData[levelTab]?.length ?? 0;
+  useEffect(() => {
+    const loadData = async () => {
+      setLoading(true);
+      try {
+        const modules = import.meta.glob('../data/**/*.json', { eager: true });
+        const data = {};
+        const subTabs = new Set();
+
+        Object.entries(modules).forEach(([path, module]) => {
+          if (path.includes(`/data/${levelTab}/`)) {
+            const parts = path.split('/');
+            const folderIdx = parts.indexOf(levelTab);
+            if (folderIdx !== -1 && parts[folderIdx + 1]) {
+              const subFolder = parts[folderIdx + 1];
+              subTabs.add(subFolder);
+              if (!data[subFolder]) data[subFolder] = [];
+              data[subFolder].push(module.default || module);
+            }
+          }
+        });
+
+        setLevelData(data);
+        const sortedSubTabs = Array.from(subTabs).sort((a, b) => {
+          const order = ['pruefungen', 'teil1', 'teil2', 'teil3', 'sprach1', 'sprach2'];
+          return order.indexOf(a) - order.indexOf(b);
+        });
+        setAvailableSubTabs(sortedSubTabs);
+
+        if (!subTabs.has(subTab) && sortedSubTabs.length > 0) {
+          setSubTab(sortedSubTabs[0]);
+        }
+      } catch (err) {
+        console.error('Error loading data:', err);
+      }
+      setLoading(false);
+    };
+
+    loadData();
+  }, [levelTab]);
+
+  const allTopics = levelData[subTab] ?? [];
+  const totalCount = allTopics.length;
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
     if (!q) return allTopics;
-    return allTopics.filter(
-      (t) =>
-        t.titleDe.toLowerCase().includes(q) ||
-        t.titleAr.includes(q)
-    );
+    return allTopics.filter((t) => t.titleDe.toLowerCase().includes(q) || t.titleAr.includes(q));
   }, [allTopics, search]);
 
   const handleCardClick = (topic) => {
-    // Navigate to topic detail — replace with your router logic
-    console.log('Navigate to topic:', topic.id);
+    navigate(`/dashboard-client/lesen/${levelTab.toLowerCase()}/${subTab}/${topic.id}`);
   };
 
   return (
-    <div
-      className="min-h-screen bg-gray-50 font-['Cairo',sans-serif]"
-      style={{
+    <div className="min-h-screen bg-gray-50 font-['Cairo',sans-serif] relative">
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{
         backgroundImage: `linear-gradient(#6366f1 1px, transparent 1px), linear-gradient(90deg, #6366f1 1px, transparent 1px)`,
         backgroundSize: '60px 60px',
-        backgroundBlendMode: 'normal',
-      }}
-    >
-      {/* Grid overlay */}
-      <div className="min-h-screen bg-gray-50/95">
-
-        {/* ── Page header ── */}
-        <div className="pt-8 pb-6 px-4 md:px-8 lg:px-12 max-w-7xl mx-auto">
-
-          {/* Back + badge row */}
-          <div className="flex items-center justify-between mb-6" dir="rtl">
+      }} />
+      <div className="relative">
+        <div className="pt-6 pb-6 px-4 md:px-8 lg:px-12 max-w-7xl mx-auto">
+          <div className="flex items-center justify-between mb-5">
             <div className="inline-flex items-center gap-2 bg-white border border-gray-200 rounded-full px-3 py-1.5 text-xs text-gray-500 shadow-sm">
-              <span className="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-pulse" />
-              محاكاة الامتحان
+              <span className="w-1.5 h-1.5 bg-indigo-500 rounded-full" />محاكاة الامتحان
             </div>
           </div>
-
-          {/* Title + stats */}
-          <div className="flex items-start justify-between gap-6" dir="rtl">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 tracking-tight">
-              Leseverstehen
-            </h1>
-
-            {/* Stats card */}
-            <div className="flex-shrink-0 bg-white rounded-2xl border border-gray-200 shadow-sm px-6 py-4 flex items-center gap-6 divide-x divide-gray-100">
-              <div className="text-center pl-6">
-                <div className="text-2xl font-black text-gray-900">
-                  {levelTab === 'b2' ? 'B2' : 'B1'}
-                </div>
-                <div className="text-xs text-gray-400 mt-0.5">المستوى</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-black text-gray-900">{totalCount}</div>
-                <div className="text-xs text-gray-400 mt-0.5">نماذج</div>
-              </div>
+          <div className="flex items-start justify-between gap-6">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-normal text-gray-900 tracking-tight">Leseverstehen</h1>
+            <div className="flex-shrink-0 bg-white rounded-2xl border border-gray-200 shadow-sm px-5 py-3 flex items-center gap-5 divide-x divide-gray-100">
+              <div className="text-center pr-5"><div className="text-xl font-normal text-gray-900">{levelTab}</div><div className="text-[11px] text-gray-400 mt-0.5">المستوى</div></div>
+              <div className="text-center pl-5"><div className="text-xl font-normal text-gray-900">{totalCount}</div><div className="text-[11px] text-gray-400 mt-0.5">نماذج</div></div>
             </div>
           </div>
-
-          {/* ── Level tabs B1 / B2 ── */}
-          <div className="flex justify-center mt-8">
-            <div className="bg-white rounded-2xl border border-gray-200 p-1.5 flex gap-1 shadow-sm">
-              {['b1', 'b2'].map((lv) => (
-                <button
-                  key={lv}
-                  onClick={() => { setLevelTab(lv); setSearch(''); }}
-                  className={`px-8 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
-                    levelTab === lv
-                      ? 'bg-white shadow-md text-gray-900 border border-gray-100'
-                      : 'text-gray-400 hover:text-gray-600'
-                  }`}
-                >
-                  Telc {lv.toUpperCase()}
-                  {levelTab === lv && (
-                    <div className="h-0.5 w-6 bg-indigo-500 rounded-full mx-auto mt-1" />
-                  )}
+          <div className="flex justify-center mt-6">
+            <div className="bg-white rounded-2xl border border-gray-200 p-1 flex gap-1 shadow-sm">
+              {['B1', 'B2'].map((lv) => (
+                <button key={lv} onClick={() => { setLevelTab(lv); setSearch(''); }}
+                  className={`px-6 py-2 rounded-xl text-xs font-normal transition-all duration-200 ${levelTab === lv ? 'bg-white shadow-sm text-gray-900 border border-gray-100' : 'text-gray-400 hover:text-gray-600'}`}>
+                  Telc {lv}
                 </button>
               ))}
             </div>
           </div>
-
-          {/* ── Sub-tabs ── */}
-          <div className="mt-6 bg-white rounded-2xl border border-gray-200 p-1.5 flex items-center gap-1 overflow-x-auto shadow-sm">
-            {SUB_TABS.map((tab) => (
-              <button
-                key={tab.key}
-                onClick={() => setSubTab(tab.key)}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium whitespace-nowrap transition-all duration-200 flex-shrink-0 ${
-                  subTab === tab.key
-                    ? 'bg-gray-50 text-gray-900 shadow-sm border border-gray-100'
-                    : 'text-gray-400 hover:text-gray-600'
-                }`}
-              >
-                <Icon
-                  name={tab.icon}
-                  size={15}
-                  className={subTab === tab.key ? 'text-indigo-500' : ''}
-                />
-                {tab.labelDe}
-                {subTab === tab.key && (
-                  <div className="h-0.5 w-4 bg-indigo-500 rounded-full absolute bottom-1 left-1/2 -translate-x-1/2 hidden" />
-                )}
-              </button>
-            ))}
+          <div className="mt-4 bg-white rounded-2xl border border-gray-200 p-1 flex items-center gap-1 overflow-x-auto shadow-sm">
+            {availableSubTabs.map((tabKey) => {
+              const tab = SUB_TAB_CONFIG[tabKey] || { labelDe: tabKey, icon: 'file' };
+              return (
+                <button key={tabKey} onClick={() => setSubTab(tabKey)}
+                  className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-normal whitespace-nowrap transition-all duration-200 flex-shrink-0 ${subTab === tabKey ? 'bg-gray-50 text-gray-900 shadow-sm border border-gray-100' : 'text-gray-400 hover:text-gray-600'}`}>
+                  <Icon name={tab.icon} size={14} className={subTab === tabKey ? 'text-indigo-500' : ''} />{tab.labelDe}
+                </button>
+              );
+            })}
           </div>
-
-          {/* ── Search + actions ── */}
-          <div className="mt-5 flex items-center gap-3" dir="rtl">
-            {/* Search bar */}
+          <div className="mt-4 flex items-center gap-2">
             <div className="flex-1 relative">
-              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
-                <Icon name="search" size={16} />
-              </span>
-              <input
-                type="text"
-                placeholder="...ابحث عن المواضيع"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="w-full bg-white border border-gray-200 rounded-2xl pr-11 pl-4 py-3.5 text-sm text-gray-700 placeholder-gray-400 outline-none focus:border-indigo-300 focus:ring-2 focus:ring-indigo-100 transition-all"
-                dir="rtl"
-              />
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"><Icon name="search" size={14} /></span>
+              <input type="text" placeholder="ابحث عن المواضيع..." value={search} onChange={(e) => setSearch(e.target.value)}
+                className="w-full bg-white border border-gray-200 rounded-2xl pl-10 pr-4 py-3 text-sm text-gray-700 placeholder-gray-400 outline-none focus:border-indigo-300 focus:ring-2 focus:ring-indigo-100 transition-all" />
             </div>
-
-            {/* Edit icon */}
-            <button className="w-12 h-12 bg-white border border-gray-200 rounded-2xl flex items-center justify-center text-gray-400 hover:text-indigo-500 hover:border-indigo-200 transition-all flex-shrink-0">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <button className="w-10 h-10 bg-white border border-gray-200 rounded-2xl flex items-center justify-center text-gray-400 hover:text-indigo-500 hover:border-indigo-200 transition-all flex-shrink-0">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
               </svg>
             </button>
-
-            {/* My list button */}
-            <button className="flex items-center gap-2 bg-white border border-gray-200 rounded-2xl px-4 py-3 text-sm text-gray-600 font-medium hover:border-indigo-200 hover:text-indigo-600 transition-all flex-shrink-0" dir="rtl">
-              <Icon name="sort" size={15} />
-              قائمتي المخصصة
+            <button className="flex items-center gap-1.5 bg-white border border-gray-200 rounded-2xl px-3 py-2.5 text-xs text-gray-600 font-normal hover:border-indigo-200 hover:text-indigo-600 transition-all flex-shrink-0">
+              <Icon name="sort" size={14} />قائمتي المخصصة
             </button>
           </div>
         </div>
-
-        {/* ── Topics grid ── */}
         <div className="px-4 md:px-8 lg:px-12 pb-16 max-w-7xl mx-auto">
-          {filtered.length === 0 ? (
-            <div className="text-center py-20 text-gray-400" dir="rtl">
-              <p className="text-lg">لا توجد مواضيع تطابق البحث</p>
-            </div>
+          {loading ? (
+            <div className="text-center py-20 text-gray-400"><p className="text-sm">جاري التحميل...</p></div>
+          ) : filtered.length === 0 ? (
+            <div className="text-center py-20 text-gray-400"><p className="text-sm">لا توجد مواضيع تطابق البحث</p></div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filtered.map((topic) => (
-                <TopicCard key={topic.id} topic={topic} onClick={handleCardClick} />
-              ))}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+              {filtered.map((topic) => <TopicCard key={topic.id} topic={topic} onClick={handleCardClick} />)}
             </div>
           )}
         </div>
-
       </div>
     </div>
   );

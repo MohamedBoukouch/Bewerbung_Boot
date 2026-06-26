@@ -1,0 +1,102 @@
+{
+  "id": "b2-t2-1",
+  "titleDe": "Sport - Teil 2",
+  "titleAr": "الرياضة - الجزء 2",
+  "level": "B2",
+  "duration": 20,
+  "parts": 0,
+  "type": "teil2",
+  "texts": [
+    {
+      "id": 1,
+      "titleDe": "Marathon-Training",
+      "contentDe": "Wer einen Marathon laufen will, braucht 6 Monate...",
+      "contentAr": "من يريد الماراثون يحتاج 6 أشهر...",
+      "questions": [
+        {
+          "id": "q1",
+          "questionDe": "Wie lange vorbereiten?",
+          "questionAr": "كم الاستعداد؟",
+          "options": [
+            {
+              "id": "a",
+              "textDe": "3 Monate",
+              "textAr": "3 أشهر",
+              "correct": false
+            },
+            {
+              "id": "b",
+              "textDe": "6 Monate",
+              "textAr": "6 أشهر",
+              "correct": true
+            },
+            {
+              "id": "c",
+              "textDe": "1 Jahr",
+              "textAr": "سنة",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "id": "q2",
+          "questionDe": "Wie oft trinken?",
+          "questionAr": "كم يشرب؟",
+          "options": [
+            {
+              "id": "a",
+              "textDe": "Alle 10 km",
+              "textAr": "كل 10 كم",
+              "correct": false
+            },
+            {
+              "id": "b",
+              "textDe": "Alle 5 km",
+              "textAr": "كل 5 كم",
+              "correct": true
+            },
+            {
+              "id": "c",
+              "textDe": "Nur am Ende",
+              "textAr": "فقط النهاية",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "titleDe": "Gesunde Ernährung",
+      "contentDe": "Ernährung ist wichtig für Sportler...",
+      "contentAr": "التغذية مهمة للرياضيين...",
+      "questions": [
+        {
+          "id": "q1",
+          "questionDe": "Wichtigste Energiequelle?",
+          "questionAr": "أهم مصدر طاقة؟",
+          "options": [
+            {
+              "id": "a",
+              "textDe": "Proteine",
+              "textAr": "بروتينات",
+              "correct": false
+            },
+            {
+              "id": "b",
+              "textDe": "Kohlenhydrate",
+              "textAr": "كربوهيدرات",
+              "correct": true
+            },
+            {
+              "id": "c",
+              "textDe": "Fette",
+              "textAr": "دهون",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

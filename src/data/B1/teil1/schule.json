@@ -1,0 +1,45 @@
+{
+  "id": "b1-t1-2",
+  "titleDe": "Schule",
+  "titleAr": "المدرسة",
+  "level": "B1",
+  "duration": 20,
+  "parts": 0,
+  "type": "teil1",
+  "texts": [
+    {
+      "id": 1,
+      "titleDe": "Das deutsche Schulsystem",
+      "contentDe": "Das deutsche Schulsystem ist sehr vielfältig...",
+      "contentAr": "النظام المدرسي الألماني متنوع...",
+      "headings": [
+        {
+          "id": "a",
+          "textDe": "Schulformen in Deutschland",
+          "textAr": "الأشكال المدرسية"
+        },
+        {
+          "id": "b",
+          "textDe": "Private Schulen",
+          "textAr": "المدارس الخاصة"
+        },
+        {
+          "id": "c",
+          "textDe": "Ganztagsschule",
+          "textAr": "المدرسة بدوام كامل"
+        },
+        {
+          "id": "d",
+          "textDe": "Schule ist teuer",
+          "textAr": "المدرسة مكلفة"
+        },
+        {
+          "id": "e",
+          "textDe": "Abitur ist schwer",
+          "textAr": "البكالوريا صعبة"
+        }
+      ],
+      "correctHeadingId": "a"
+    }
+  ]
+}

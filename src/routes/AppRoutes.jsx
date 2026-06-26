@@ -8,9 +8,10 @@ import Login from "../pages/Login";
 import Billing from "../pages/Billing";
 import Signup from "../pages/Signup";
 
-//Client side
+// Client side
 import DashboardClient from "../pages/DashboardClient";
 import Lesen from "../pages/Lesen";
+import LesenExercise from "../pages/LesenExercise";
 
 export default function AppRoutes() {
   return (
@@ -21,11 +22,12 @@ export default function AppRoutes() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/billing" element={<Billing />} />
       </Route>
-
-      <Route path="/dashboard-client" element={<DashboardLayout />}>
-        <Route index element={<DashboardClient />} />
-        <Route path="lesen" element={<Lesen />} />
-      </Route>
+      
+<Route path="/dashboard-client" element={<DashboardLayout />}>
+  <Route index element={<DashboardClient />} />
+  <Route path="lesen" element={<Lesen />} />
+  <Route path="lesen/:level/:subTab/:topicId" element={<LesenExercise />} />
+</Route>
 
     </Routes>
   );

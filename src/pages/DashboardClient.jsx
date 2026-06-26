@@ -105,7 +105,7 @@ const DashboardClient = () => {
   ];
 
   return (
-    <div className="font-['Cairo',sans-serif]">
+    <div className="font-['Cairo',sans-serif] ml-8 mr-8">
       {/* Welcome + Stats Row */}
       <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-5 mb-6">
         {/* Stats Cards */}

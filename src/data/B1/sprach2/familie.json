@@ -1,0 +1,32 @@
+{
+  "id": "b1-s2-1",
+  "titleDe": "Wortschatz: Familie",
+  "titleAr": "المفردات: العائلة",
+  "level": "B1",
+  "duration": 15,
+  "parts": 0,
+  "type": "sprach2",
+  "exercises": [
+    {
+      "id": 1,
+      "instructionDe": "Ordnen Sie zu.",
+      "instructionAr": "صنف.",
+      "items": [
+        {
+          "id": "i1",
+          "wordDe": "die Mutter",
+          "wordAr": "الأم",
+          "categoryDe": "Familie",
+          "categoryAr": "العائلة"
+        },
+        {
+          "id": "i2",
+          "wordDe": "der Tisch",
+          "wordAr": "الطاولة",
+          "categoryDe": "Möbel",
+          "categoryAr": "الأثاث"
+        }
+      ]
+    }
+  ]
+}

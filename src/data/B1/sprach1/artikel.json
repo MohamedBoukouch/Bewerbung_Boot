@@ -1,0 +1,32 @@
+{
+  "id": "b1-s1-1",
+  "titleDe": "Grammatik: Artikel",
+  "titleAr": "القواعد: الأدوات",
+  "level": "B1",
+  "duration": 15,
+  "parts": 0,
+  "type": "sprach1",
+  "exercises": [
+    {
+      "id": 1,
+      "instructionDe": "Ergänzen Sie den Artikel.",
+      "instructionAr": "أكمل الأداة.",
+      "items": [
+        {
+          "id": "i1",
+          "textDe": "___ Sonne scheint.",
+          "textAr": "___ الشمس.",
+          "answer": "Die",
+          "answerAr": "الـ"
+        },
+        {
+          "id": "i2",
+          "textDe": "___ Buch liegt.",
+          "textAr": "___ الكتاب.",
+          "answer": "Das",
+          "answerAr": "الـ"
+        }
+      ]
+    }
+  ]
+}

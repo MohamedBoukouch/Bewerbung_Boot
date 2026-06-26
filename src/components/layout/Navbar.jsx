@@ -31,10 +31,10 @@ export default function Navbar() {
 
         {/* ========== CENTER NAV (pill) ========== */}
         <div className="hidden lg:flex items-center bg-gray-50 rounded-full px-1 py-0.5">
-          <NavItem href="#lesen">Lesen</NavItem>
-          <NavItem href="#horen">Hören</NavItem>
-          <NavItem href="#schreiben">Schreiben</NavItem>
-          <NavItem href="#test">اختبر نفسك</NavItem>
+          <NavItem href="/dashboard-client/lesen">Lesen</NavItem>
+          <NavItem href="/dashboard-client/horen">Hören</NavItem>
+          <NavItem href="/dashboard-client/schreiben">Schreiben</NavItem>
+          <NavItem href="/dashboard-client/test">اختبر نفسك</NavItem>
         </div>
 
         {/* ========== RIGHT SECTION ========== */}

@@ -1,0 +1,44 @@
+{
+  "id": "b2-t2-2",
+  "titleDe": "Kellner - Teil 2",
+  "titleAr": "النادل - الجزء 2",
+  "level": "B2",
+  "duration": 20,
+  "parts": 0,
+  "type": "teil2",
+  "texts": [
+    {
+      "id": 1,
+      "titleDe": "Ausbildung zum Kellner",
+      "contentDe": "In Deutschland ist Kellner ein Ausbildungsberuf...",
+      "contentAr": "في ألمانيا النادل مهنة تدريب...",
+      "questions": [
+        {
+          "id": "q1",
+          "questionDe": "Wie lange dauert Ausbildung?",
+          "questionAr": "كم يستمر التدريب؟",
+          "options": [
+            {
+              "id": "a",
+              "textDe": "1 Jahr",
+              "textAr": "سنة",
+              "correct": false
+            },
+            {
+              "id": "b",
+              "textDe": "2 Jahre",
+              "textAr": "سنتان",
+              "correct": false
+            },
+            {
+              "id": "c",
+              "textDe": "3 Jahre",
+              "textAr": "3 سنوات",
+              "correct": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
