@@ -1,0 +1,261 @@
+{
+  "titleDe": "Hallo Maria",
+  "titleAr": "مرحباً ماريا",
+  "level": "B2",
+  "subTab": "sprach1",
+  "duration": 10,
+  "examType": "Sprachbausteine Teil 1",
+  "examTypeAr": "قواعد اللغة الجزء 1",
+  "paragraphs": [
+    {
+      "id": 1,
+      "contentDe": "Bevor Wieder der Arbeitsalltag beginnt. schicke ich dir",
+      "contentAr": "قبل أن يبدأ روتين العمل مرة أخرى. أرسل لك",
+      "gapIndex": 21,
+      "options": [
+        {
+          "id": "a",
+          "textDe": "momentan",
+          "textAr": "حالياً"
+        },
+        {
+          "id": "b",
+          "textDe": "noch",
+          "textAr": "لا يزال"
+        },
+        {
+          "id": "c",
+          "textDe": "weiterhin",
+          "textAr": "ما زال"
+        }
+      ],
+      "correctOptionId": "c"
+    },
+    {
+      "id": 2,
+      "contentDe": "rasch einige Zeilen.\num dir von unserem Wochenende zu erzählen. Es ist so schade, dass du",
+      "contentAr": "بسرعة بعض الأسطر.\nلأخبرك عن عطلتنا في نهاية الأسبوع. من المؤسف جداً أنك",
+      "gapIndex": 22,
+      "options": [
+        {
+          "id": "a",
+          "textDe": "deswegen",
+          "textAr": "لهذا السبب"
+        },
+        {
+          "id": "b",
+          "textDe": "wegen",
+          "textAr": "بسبب"
+        },
+        {
+          "id": "c",
+          "textDe": "weil",
+          "textAr": "لأن"
+        }
+      ],
+      "correctOptionId": "b"
+    },
+    {
+      "id": 3,
+      "contentDe": "deiner Grippe nicht dabei sein konntest! Wir haben dich alle sehr vermisst.",
+      "contentAr": "أنفلونزاك لم تتمكني من الحضور! لقد افتقدناك جميعاً كثيراً.",
+      "gapIndex": null,
+      "options": [],
+      "correctOptionId": null
+    },
+    {
+      "id": 4,
+      "contentDe": "auf Mikro sind Alle mit dem Zug angereist und wir haben uns schon am Bahnhof getroffen.\nVon dort sind wir dann los in die Ferienwohnung ,die Lilo für uns reserviert hatte.\nNachdem wir unser Gepäck abgestellt",
+      "contentAr": "على ميكرو وصل الجميع بالقطار وقد التقينا بالفعل في المحطة.\nمن هناك انطلقنا إلى شقة العطلة التي حجزتها ليلو لنا.\nبعد أن وضعنا أمتعتنا",
+      "gapIndex": 23,
+      "options": [
+        {
+          "id": "a",
+          "textDe": "abgesehen",
+          "textAr": "باستثناء"
+        },
+        {
+          "id": "b",
+          "textDe": "außer",
+          "textAr": "ما عدا"
+        },
+        {
+          "id": "c",
+          "textDe": "bis",
+          "textAr": "حتى"
+        }
+      ],
+      "correctOptionId": "a"
+    },
+    {
+      "id": 5,
+      "contentDe": ". haben wir gleich einen rundgang durch den ort gemacht. Lilo wusste viel Interessantes zu erzählen. Sie lebt ja schon einige Jahre dort und hat sich",
+      "contentAr": ". قمنا على الفور بجولة في المكان. كانت ليلو تعرف الكثير من الأشياء المثيرة للاهتمام لتخبرنا بها. إنها تعيش هناك منذ عدة سنوات وقد أثبتت نفسها",
+      "gapIndex": 24,
+      "options": [
+        {
+          "id": "a",
+          "textDe": "haben",
+          "textAr": "لدينا"
+        },
+        {
+          "id": "b",
+          "textDe": "hatten",
+          "textAr": "كان لدينا"
+        },
+        {
+          "id": "c",
+          "textDe": "hätten",
+          "textAr": "كنا سنضع"
+        }
+      ],
+      "correctOptionId": "b"
+    },
+    {
+      "id": 6,
+      "contentDe": "ausgezeichnete Fremdenführerin erwiesen. Besonders beeindruckt hat uns der Wunderschöne Park, in dem gerade die rhododendren blühten . Eine Wahre Pracht. Das hätte dir auch gefallen! später sind wir zum Ammersee gewandert, den man in kurzer Zeit vom ort aus erreicht. Dort haben wir eine Bootsfahrt über den See gemacht. vom Boot aus hat man einen Wunderbaren Blick auf die beeindruckende Felsenlandschaft. Am Abend stand dann die Felsenbühne",
+      "contentAr": "كمرشدة سياحية ممتازة. أثار إعجابنا بشكل خاص الحديقة الجميلة، حيث كانت أزهار الردودندرون تتفتح. روعة حقيقية. لكان ذلك قد أعجبك أيضاً! في وقت لاحق سافرنا إلى بحيرة أمير، التي يمكن الوصول إليها في وقت قصير من المكان. هناك قمنا برحلة بالقارب عبر البحيرة. من القارب يمكن للمرء أن يرى منظراً رائعاً للمناظر الطبيعية الصخرية المثيرة للإعجاب. في المساء كانت المسرحية الصخرية",
+      "gapIndex": 25,
+      "options": [
+        {
+          "id": "a",
+          "textDe": "als",
+          "textAr": "كـ"
+        },
+        {
+          "id": "b",
+          "textDe": "für",
+          "textAr": "لـ"
+        },
+        {
+          "id": "c",
+          "textDe": "zur",
+          "textAr": "إلى"
+        }
+      ],
+      "correctOptionId": "a"
+    },
+    {
+      "id": 7,
+      "contentDe": "dem Programm.\nDie Wanderung am nächsten Tag war",
+      "contentAr": "في البرنامج.\nكانت الرحلة في اليوم التالي",
+      "gapIndex": 26,
+      "options": [
+        {
+          "id": "a",
+          "textDe": "auf",
+          "textAr": "على"
+        },
+        {
+          "id": "b",
+          "textDe": "in",
+          "textAr": "في"
+        },
+        {
+          "id": "c",
+          "textDe": "zu",
+          "textAr": "إلى"
+        }
+      ],
+      "correctOptionId": "a"
+    },
+    {
+      "id": 8,
+      "contentDe": "schön anstrengend. aber Wunderbar.",
+      "contentAr": "جميلة متعبة. لكن رائعة.",
+      "gapIndex": 27,
+      "options": [
+        {
+          "id": "a",
+          "textDe": "absolut",
+          "textAr": "تماماً"
+        },
+        {
+          "id": "b",
+          "textDe": "ganz",
+          "textAr": "كلياً"
+        },
+        {
+          "id": "c",
+          "textDe": "vollkommen",
+          "textAr": "بشكل كامل"
+        }
+      ],
+      "correctOptionId": "b"
+    },
+    {
+      "id": 9,
+      "contentDe": "alle ziemlich erschöpft waren. haben wir nach dem Abendessen noch lange zusammen gegessen. Und über alte Zeiten geplaudert. Am nächsten morgen nach unserem gemeinsam frühstück waren uns einig, dass wir bald wieder zusammen einen Ausflug machen",
+      "contentAr": "كان الجميع متعبين جداً. قضينا وقتًا طويلاً معاً بعد العشاء. وتحدثنا عن الأيام القديمة. في صباح اليوم التالي بعد إفطارنا المشترك، اتفقنا على أننا سنقوم برحلة قصيرة معاً مرة أخرى",
+      "gapIndex": 28,
+      "options": [
+        {
+          "id": "a",
+          "textDe": "obwohl",
+          "textAr": "على الرغم من"
+        },
+        {
+          "id": "b",
+          "textDe": "trotzdem",
+          "textAr": "مع ذلك"
+        },
+        {
+          "id": "c",
+          "textDe": "ungeachtet",
+          "textAr": "بغض النظر عن"
+        }
+      ],
+      "correctOptionId": "a"
+    },
+    {
+      "id": 10,
+      "contentDe": ". Und nächste Mal musst du unbedingt dabei sein. Im Anhang schicke ich dir einige. Wie du siehst , war unser treffen wirklich lustig !. Ich hoffe , dass es dir",
+      "contentAr": ". وفي المرة القادمة يجب أن تكوني حاضرة بالتأكيد. أرسل لك في المرفق بعضاً. كما ترين، كان لقاؤنا ممتعاً حقاً!. أتمنى أنك",
+      "gapIndex": 29,
+      "options": [
+        {
+          "id": "a",
+          "textDe": "durften",
+          "textAr": "سمح لنا"
+        },
+        {
+          "id": "b",
+          "textDe": "konnten",
+          "textAr": "استطعنا"
+        },
+        {
+          "id": "c",
+          "textDe": "sollten",
+          "textAr": "يجب أن"
+        }
+      ],
+      "correctOptionId": "b"
+    },
+    {
+      "id": 11,
+      "contentDe": "schon wieder besser geht.\n\nLiebe Grüße von uns allem\nCem",
+      "contentAr": "تشعرين بالتحسن بالفعل مرة أخرى.\n\nأطيب التحيات منا جميعاً\nجم",
+      "gapIndex": 30,
+      "options": [
+        {
+          "id": "a",
+          "textDe": "inzwischen",
+          "textAr": "في هذه الأثناء"
+        },
+        {
+          "id": "b",
+          "textDe": "während",
+          "textAr": "أثناء"
+        },
+        {
+          "id": "c",
+          "textDe": "zwischen",
+          "textAr": "بين"
+        }
+      ],
+      "correctOptionId": "a"
+    }
+  ],
+  "totalGaps": 10,
+  "passingScore": 6
+}

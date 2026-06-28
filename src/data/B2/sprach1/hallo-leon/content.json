@@ -1,6 +1,6 @@
 {
-  "titleDe": "Hallo bkch",
-  "titleAr": "مرحباً فيرديناند",
+  "titleDe": "Hallo Leon",
+  "titleAr": "مرحباً ليون",
   "level": "B2",
   "subTab": "sprach1",
   "duration": 10,
@@ -9,57 +9,177 @@
   "paragraphs": [
     {
       "id": 1,
-      "contentDe": "nun habe ich mich schon so lange nicht bei dir gemeldet – das tut mir wirklich leid! Ich hatte in den vergangenen Monaten viel Stress, weil ich ja nun studiere und nebenbei noch arbeiten muss,",
-      "contentAr": "لم أتواصل معك منذ فترة طويلة - أشعر بالأسف حقاً! كنت تحت ضغط كبير في الأشهر الماضية، لأنني أدرس الآن وأعمل في نفس الوقت،",
+      "contentDe": "Betreff: Grüße ",
+      "contentAr": "الموضوع: تحيات (21) برلين\nمرحباً ليون،\nشكراً جزيلاً على بريدك الإلكتروني الأخير من بكين! أنت تعمل الآن منذ نصف سنة في الصين - لا يصدق كم يمر الوقت سريعاً.\nللأسف لم يكن لدي وقت للرد عليك في الأسابيع الثلاثة الماضية، لأنني كنت مشغولاً جداً. لكن الآن أخبرك،",
       "gapIndex": 21,
       "options": [
         {
           "id": "a",
-          "textDe": "anstatt",
-          "textAr": "بدلاً من"
+          "textDe": "ab",
+          "textAr": "من"
         },
         {
           "id": "b",
-          "textDe": "ohne",
-          "textAr": "بدون"
+          "textDe": "aus",
+          "textAr": "من"
         },
         {
           "id": "c",
-          "textDe": "um",
-          "textAr": "لكي"
+          "textDe": "von",
+          "textAr": "من"
         }
       ],
       "correctOptionId": "c"
     },
     {
       "id": 2,
-      "contentDe": "meine Miete und alles andere bezahlen zu können. Zum Glück macht mir mein Nebenjob wenigstens Spaß. Ich weiß nicht,",
-      "contentAr": "لكي أتمكن من دفع إيجاري وكل شيء آخر. لحسن الحظ، وظيفتي الجانبية ممتعة على الأقل. لا أعرف،",
+      "contentDe": "\n\nBerlin\nHallo Leon,\nvielen Dank für deine letzte Mail aus Peking! Du arbeitest ja jetzt schon seit einem halben Jahr in China – unglaublich, wie schnell die Zeit vergeht.\nLeider hatte ich in den letzten drei Wochen keine Zeit, dir zu antworten, weil ich viel zu tun hatte. Aber jetzt berichte ich dir,",
+      "contentAr": "الموضوع: تحيات (21) برلين\nمرحباً ليون،\nشكراً جزيلاً على بريدك الإلكتروني الأخير من بكين! أنت تعمل الآن منذ نصف سنة في الصين - لا يصدق كم يمر الوقت سريعاً.\nللأسف لم يكن لدي وقت للرد عليك في الأسابيع الثلاثة الماضية، لأنني كنت مشغولاً جداً. لكن الآن أخبرك،",
+      "gapIndex": 21,
+      "options": [
+        {
+          "id": "a",
+          "textDe": "ab",
+          "textAr": "من"
+        },
+        {
+          "id": "b",
+          "textDe": "aus",
+          "textAr": "من"
+        },
+        {
+          "id": "c",
+          "textDe": "von",
+          "textAr": "من"
+        }
+      ],
+      "correctOptionId": "c"
+    },
+    {
+      "id": 3,
+      "contentDe": "alles los war.\nAlso, im Büro haben wir derzeit viel Stress,",
+      "contentAr": "ما كان يحدث.\nإذاً، في المكتب لدينا حالياً ضغط كبير،",
       "gapIndex": 22,
       "options": [
         {
           "id": "a",
-          "textDe": "dass",
-          "textAr": "أن"
+          "textDe": "wann",
+          "textAr": "متى"
         },
         {
           "id": "b",
-          "textDe": "ob",
-          "textAr": "هل"
+          "textDe": "was",
+          "textAr": "ما"
         },
         {
           "id": "c",
-          "textDe": "während",
-          "textAr": "أثناء"
+          "textDe": "wie",
+          "textAr": "كيف"
+        }
+      ],
+      "correctOptionId": "c"
+    },
+    {
+      "id": 4,
+      "contentDe": "drei Kollegen im Urlaub sind und eine weitere Kollegin seit zwei Wochen krank ist. Jetzt müssen wir mit fünf Leuten die Arbeit erledigen, die sonst neun Leute machen. Ich weiß wirklich nicht, wer diese Urlaubsplanung gemacht hat. Hoffentlich",
+      "contentAr": "ثلاثة زملاء في إجازة وزميلة أخرى مريضة منذ أسبوعين. الآن يجب علينا إنجاز العمل بخمسة أشخاص كان يقوم به تسعة أشخاص. لا أعرف حقاً من قام بهذا التخطيط للإجازات. نأمل",
+      "gapIndex": 23,
+      "options": [
+        {
+          "id": "a",
+          "textDe": "da",
+          "textAr": "هناك"
+        },
+        {
+          "id": "b",
+          "textDe": "indem",
+          "textAr": "بـ"
+        },
+        {
+          "id": "c",
+          "textDe": "obwohl",
+          "textAr": "على الرغم من"
+        }
+      ],
+      "correctOptionId": "a"
+    },
+    {
+      "id": 5,
+      "contentDe": "das in Zukunft besser organisiert.\nAbends waren Carmen und ich dann ein paarmal aus. Wir waren zum Beispiel bei einem Konzert von \"Belasco\". Kennst du die Band? Eigentlich war ich an dem Abend ganz schön kaputt und",
+      "contentAr": "أن يتم تنظيم ذلك بشكل أفضل في المستقبل.\nفي المساء كنت أنا وكارمن نخرج عدة مرات. كنا مثلاً في حفلة موسيقية لـ \"Belasco\". هل تعرف الفرقة؟ في الواقع كنت متعباً جداً في ذلك المساء و",
+      "gapIndex": 24,
+      "options": [
+        {
+          "id": "a",
+          "textDe": "ist",
+          "textAr": "يكون"
+        },
+        {
+          "id": "b",
+          "textDe": "wird",
+          "textAr": "سيكون"
+        },
+        {
+          "id": "c",
+          "textDe": "würde",
+          "textAr": "كنت سأكون"
         }
       ],
       "correctOptionId": "b"
     },
     {
-      "id": 3,
-      "contentDe": "ich das sonst durchhalten würde. Vielleicht habe ich dir schon erzählt, dass ich abends und am Wochenende in einer Kneipe in der Küche helfe. Das ist zwar oft sehr anstrengend,",
-      "contentAr": "كيف كنت سأستمر في هذه الحالة. ربما أخبرتك بالفعل أنني أساعد في مطبخ حانة في المساء وعطلة نهاية الأسبوع. هذا غالباً مرهق جداً،",
-      "gapIndex": 23,
+      "id": 6,
+      "contentDe": "am liebsten zuhause geblieben, aber ich hatte Carmen die Karten zum Geburtstag geschenkt. Da",
+      "contentAr": "بقيت في المنزل بكل سرور، لكنني أعطيت كارمن التذاكر كهدية عيد ميلاد. إذاً",
+      "gapIndex": 25,
+      "options": [
+        {
+          "id": "a",
+          "textDe": "bin",
+          "textAr": "أكون"
+        },
+        {
+          "id": "b",
+          "textDe": "war",
+          "textAr": "كنت"
+        },
+        {
+          "id": "c",
+          "textDe": "wäre",
+          "textAr": "كنت سأكون"
+        }
+      ],
+      "correctOptionId": "c"
+    },
+    {
+      "id": 7,
+      "contentDe": "ich ja schlecht auf dem Sofa sitzen bleiben! Im Nachhinein muss ich sagen: Ein Glück, dass wir zu dem Konzert gegangen sind,",
+      "contentAr": "لم يكن بإمكاني البقاء جالساً على الأريكة! فيما بعد يجب أن أقول: لحسن الحظ أننا ذهبنا إلى الحفلة الموسيقية،",
+      "gapIndex": 26,
+      "options": [
+        {
+          "id": "a",
+          "textDe": "konnte",
+          "textAr": "استطعت"
+        },
+        {
+          "id": "b",
+          "textDe": "musste",
+          "textAr": "كان يجب علي"
+        },
+        {
+          "id": "c",
+          "textDe": "sollte",
+          "textAr": "يجب أن"
+        }
+      ],
+      "correctOptionId": "a"
+    },
+    {
+      "id": 8,
+      "contentDe": "es war einfach nur super!\nAn den letzten beiden Wochenenden hatten wir dann auch noch Familienfeiern: Erst hatte meine ältere Schwester Geburtstag und hat groß gefeiert, dann hat ein Cousin geheiratet und uns eingeladen,",
+      "contentAr": "لقد كان رائعاً ببساطة!\nفي عطلة نهاية الأسبوعين الماضيين كان لدينا أيضاً احتفالات عائلية: أولاً أختي الكبرى عيد ميلادها واحتفلت بشكل كبير، ثم تزوج ابن عمي ودعانا،",
+      "gapIndex": 27,
       "options": [
         {
           "id": "a",
@@ -73,188 +193,68 @@
         },
         {
           "id": "c",
-          "textDe": "und",
-          "textAr": "و"
-        }
-      ],
-      "correctOptionId": "a"
-    },
-    {
-      "id": 4,
-      "contentDe": "andererseits ist dauernd was los, es wird nicht langweilig, und meine Kollegen sind total nett. Erinnerst du dich noch an unsere Zeit in der Grundschule? Mit acht Jahren wollte ich ja",
-      "contentAr": "من ناحية أخرى، هناك دائماً نشاط، لا يصبح مملاً، وزملائي لطفاء جداً. هل تتذكر وقتنا في المدرسة الابتدائية؟ في الثامنة من عمري، أردت",
-      "gapIndex": 24,
-      "options": [
-        {
-          "id": "a",
-          "textDe": "bestimmt",
-          "textAr": "بالتأكيد"
-        },
-        {
-          "id": "b",
-          "textDe": "unbedingt",
-          "textAr": "بشدة / حتماً"
-        },
-        {
-          "id": "c",
-          "textDe": "völlig",
-          "textAr": "تماماً"
+          "textDe": "sondern",
+          "textAr": "بل"
         }
       ],
       "correctOptionId": "b"
     },
     {
-      "id": 5,
-      "contentDe": "Kellnerin werden, weil man da Trinkgeld bekommt. Naja, jetzt bin ich in der Küche gelandet, knapp daneben ist auch vorbei ;) Was macht denn deine Ausbildung? Wenn ich",
-      "contentAr": "أن أصبح نادلة، لأن المرء يحصل على بقشيش هناك. حسناً، الآن أنا في المطبخ، قريب جداً لكن ليس تماماً ;) ماذا عن تدريبك؟ إذا لم",
-      "gapIndex": 25,
-      "options": [
-        {
-          "id": "a",
-          "textDe": "dich",
-          "textAr": "أنت"
-        },
-        {
-          "id": "b",
-          "textDe": "mich",
-          "textAr": "أنا"
-        },
-        {
-          "id": "c",
-          "textDe": "sich",
-          "textAr": "نفسه"
-        }
-      ],
-      "correctOptionId": "b"
-    },
-    {
-      "id": 6,
-      "contentDe": "nicht täusche, bist du ja in einem halben Jahr schon fertig, oder? Das ist ja nicht mehr lang! Neulich habe ich übrigens Tina und Kevin hier in der Nähe der Uni getroffen – die waren ja schon ein Paar,",
-      "contentAr": "يخدعني، ستنتهي في غضون نصف سنة، أليس كذلك؟ هذا لم يعد طويلاً! بالمناسبة، التقيت بتينا وكيفين بالقرب من الجامعة مؤخراً - كانا زوجاً بالفعل،",
-      "gapIndex": 26,
-      "options": [
-        {
-          "id": "a",
-          "textDe": "als",
-          "textAr": "عندما"
-        },
-        {
-          "id": "b",
-          "textDe": "wenn",
-          "textAr": "إذا"
-        },
-        {
-          "id": "c",
-          "textDe": "wie",
-          "textAr": "كيف"
-        }
-      ],
-      "correctOptionId": "a"
-    },
-    {
-      "id": 7,
-      "contentDe": "wir noch in der Schule gegangen sind, und jetzt will sie tatsächlich verheiratet! Wie sehen denn deine Pläne für die",
-      "contentAr": "كنا لا نزال في المدرسة، والآن تريد الزواج فعلاً! ما هي خططك لـ",
-      "gapIndex": 27,
-      "options": [
-        {
-          "id": "a",
-          "textDe": "baldigen",
-          "textAr": "القريبة"
-        },
-        {
-          "id": "b",
-          "textDe": "kommenden",
-          "textAr": "القادمة"
-        },
-        {
-          "id": "c",
-          "textDe": "vergangenen",
-          "textAr": "الماضية"
-        }
-      ],
-      "correctOptionId": "b"
-    },
-    {
-      "id": 8,
-      "contentDe": "Wochenenden aus? Wir könnten uns ja vielleicht mal wieder treffen und in Ruhe quatschen – hättest du Lust",
-      "contentAr": "عطلة نهاية الأسبوع؟ يمكننا أن نلتقي مرة أخرى ونتكلم بهدوء - هل لديك رغبة",
+      "id": 9,
+      "contentDe": "war zwar schön, aber auch ganz anstrengend. Ich bin froh, dass wir für die kommenden Wochenenden",
+      "contentAr": "كان جميلاً، لكن أيضاً متعباً جداً. أنا سعيد أننا لعطلة نهاية الأسبوع القادمة",
       "gapIndex": 28,
       "options": [
         {
           "id": "a",
-          "textDe": "danach",
-          "textAr": "بعد ذلك"
+          "textDe": "Beide",
+          "textAr": "كلاهما"
         },
         {
           "id": "b",
-          "textDe": "darüber",
-          "textAr": "حول ذلك"
+          "textDe": "Beiden",
+          "textAr": "كليهما"
         },
         {
           "id": "c",
-          "textDe": "dazu",
-          "textAr": "في ذلك"
-        }
-      ],
-      "correctOptionId": "c"
-    },
-    {
-      "id": 9,
-      "contentDe": "? In meiner Straße hat vor einem Monat ein nettes kleines Café aufgemacht, die haben nicht nur sehr leckere Kuchen,",
-      "contentAr": "؟ في شارعي، افتتح مقهى صغير لطيف قبل شهر، لديهم ليس فقط كعك لذيذ جداً،",
-      "gapIndex": 29,
-      "options": [
-        {
-          "id": "a",
-          "textDe": "aber",
-          "textAr": "لكن"
-        },
-        {
-          "id": "b",
-          "textDe": "oder",
-          "textAr": "أو"
-        },
-        {
-          "id": "c",
-          "textDe": "sondern",
-          "textAr": "بل"
+          "textDe": "Beides",
+          "textAr": "كل شيء"
         }
       ],
       "correctOptionId": "c"
     },
     {
       "id": 10,
-      "contentDe": "auch einige kleine Gerichte zu wirklich günstigen Preisen. Wäre das was",
-      "contentAr": "بل أيضاً بعض الأطباق الصغيرة بأسعار حقاً رخيصة. هل هذا مناسب",
-      "gapIndex": 30,
+      "contentDe": "keine Pläne haben.\nDas war's erst mal von mir. Melde dich doch wieder, ich freue mich ",
+      "contentAr":   "لا خطط لدينا.\nهذا كل شيء مني الآن. أرسل لي مرة أخرى، أنا أتطلع",
+      "gapIndex": 29,
       "options": [
         {
           "id": "a",
-          "textDe": "für",
-          "textAr": "لك"
+          "textDe": "erst",
+          "textAr": "أولاً"
         },
         {
           "id": "b",
-          "textDe": "gegen",
-          "textAr": "ضد"
+          "textDe": "noch",
+          "textAr": "لا يزال"
         },
         {
           "id": "c",
-          "textDe": "ohne",
-          "textAr": "بدون"
+          "textDe": "schon",
+          "textAr": "بالفعل"
         }
       ],
-      "correctOptionId": "a"
+      "correctOptionId": "b"
     },
-    {
-      "id": 11,
-      "contentDe": "dich? Mail mir doch einfach, wenn du magst, ich würde mich freuen.\n\nViele Grüße,\nNadine",
-      "contentAr": "لك؟ أرسل لي بريداً إلكترونياً ببساطة إذا أردت، سأكون سعيدة.\n\nمع أطيب التحيات،\nنادين",
-      "gapIndex": null,
-      "options": [],
-      "correctOptionId": null
-    }
+   {
+  "id": 11,
+  "contentDe": "eine nächste E-Mail!\nViele Grüße sendet dir\nFabian\n",
+  "contentAr": "رسالتك الإلكترونية القادمة!\nمع أطيب التحيات،\nفابيان",
+  "gapIndex": null,
+  "options": [],
+  "correctOptionId": null
+}
   ],
   "totalGaps": 10,
   "passingScore": 6
